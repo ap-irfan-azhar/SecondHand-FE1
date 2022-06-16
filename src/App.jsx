@@ -10,6 +10,7 @@ function App() {
   return (
     <Router>
       <NavbarFull/>
+      {/* <NavbarTitle data="data"/> */}
       <main>
         <Routes>
           <Route path="/" element={<Home />} />
