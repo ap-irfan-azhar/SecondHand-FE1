@@ -15,7 +15,7 @@ const register = (username, email, password) => {
 const login = (username, password) => {
   //Bakal return suatu object
   return axios
-    .post(API_URL + "login?", {
+    .post(API_URL + "login", {
       username,
       password,
     })
