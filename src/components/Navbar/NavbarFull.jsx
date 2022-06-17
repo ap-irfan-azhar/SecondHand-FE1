@@ -9,6 +9,7 @@ import { BiUser,BiSearch } from 'react-icons/bi';
 export default function NavbarFull() {
 
   let [noti, setNoti] = useState(false);
+  let [login, setLogin] = useState(true);
 
   const Input = styled.input`
     background-color : #EEEEEE;
@@ -45,12 +46,15 @@ export default function NavbarFull() {
         <div className="container">
           <div className="d-flex">
             <span className="navbar-brand mb-0 h1 order-2">Navbar</span>
-            <div className="navbar-toggler order-1 border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            {/* <div className="navbar-toggler order-1 border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <AiOutlineUnorderedList size={20}/>
+            </div> */}
+            <div className="navbar-toggler order-1 border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
               <AiOutlineUnorderedList size={20}/>
             </div>
 
-          </div>
 
+          </div>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
 
             <form className="d-flex col-10 col-sm-8 col-md-6 col-lg-4">
@@ -62,7 +66,8 @@ export default function NavbarFull() {
               </div>
             </form>
 
-            <ul className="navbar-nav ms-auto mb-2 mb-lg-0 d-flex flex-row">
+            {login ? (
+              <ul className="navbar-nav ms-auto mb-2 mb-lg-0 d-flex flex-row">
               <li className="nav-item">
                 <a className="nav-link"><AiOutlineUnorderedList size={20}/></a>
               </li>
@@ -75,6 +80,9 @@ export default function NavbarFull() {
                 <a className="nav-link" href="#"><BiUser size={20}/></a>
               </li>
             </ul>
+            )
+            :(<button type="button" className="btn btn-primary">Primary</button>)}
+            
           </div>
         </div>
       </nav>
@@ -99,6 +107,19 @@ export default function NavbarFull() {
           </div>
         </div>
       </div>
+
+      <div className="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+            <div className="offcanvas-header">
+              <h5 className="offcanvas-title" id="offcanvasExampleLabel">SecondHand</h5>
+              <button type="button" className="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div className="offcanvas-body">
+              <p>Notifikasi</p>
+              <p>Daftar Jual</p>
+              <p>Akun Saya</p>
+            </div>
+          </div>
+
 
       <Link to="/login">
         <button className="btn btn-primary" type="submit">
