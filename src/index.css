@@ -21,3 +21,7 @@ code {
   width: 220%;
 
 } */
+
+.round {
+  border-radius: 15px !important;
+}

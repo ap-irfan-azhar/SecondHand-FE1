@@ -87,7 +87,7 @@ export default function NavbarFull() {
         </div>
       </nav>
 
-      <div className={`card float-end shadow-sm ${noti ? 'd-block' : 'd-none'} `} id="notifikasi" style={{width: `420px`, right:`5rem`, borderRadius:`15px`}}>
+      <div className={`card float-end shadow-sm position-absolute round ${noti ? 'd-block' : 'd-none'} `} id="notifikasi" style={{width: `420px`, right:`5rem`, zIndex:3}}>
         <div className="card-body">
           <div className="container border-bottom d-flex">
             <div className="col-md-2">
