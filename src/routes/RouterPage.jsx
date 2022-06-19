@@ -6,7 +6,8 @@ import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Buyer from "../pages/Buyer";
-import HalamanProduk from "../pages/Buyer/HalamanProduk";
+import HalamanProduk from "../pages/Seller/HalamanProduk";
+import InfoPenawar from '../pages/Seller/InfoPenawar';
 
 const RouterPage = () => {
   return (
@@ -19,7 +20,10 @@ const RouterPage = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/buyer" element={<Buyer />} />
+
+          {/* Seller */}
           <Route path="/seller/produk/detail" element={<HalamanProduk />} />
+          <Route path="/seller/penawaran" element={<InfoPenawar />} />
         </Routes>
       </main>
     </Router>

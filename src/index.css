@@ -25,3 +25,15 @@ code {
 .round {
   border-radius: 15px !important;
 }
+
+.d-contents{
+  display: contents;
+}
+
+.w-20{
+  width: 20%;
+}
+
+.w-80{
+  width: 80%;
+}
