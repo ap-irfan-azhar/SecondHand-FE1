@@ -42,7 +42,7 @@ export default function NavbarFull() {
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <nav className="navbar navbar-expand-lg navbar-light bg-light mb-4">
         <div className="container">
           <div className="d-flex">
             <span className="navbar-brand mb-0 h1 order-2">Navbar</span>
@@ -87,7 +87,7 @@ export default function NavbarFull() {
         </div>
       </nav>
 
-      <div className={`card float-end shadow-sm ${noti ? 'd-block' : 'd-none'} `} id="notifikasi" style={{width: `420px`, right:`5rem`, borderRadius:`15px`}}>
+      <div className={`card float-end shadow-sm position-absolute round ${noti ? 'd-block' : 'd-none'} `} id="notifikasi" style={{width: `420px`, right:`5rem`, zIndex:3}}>
         <div className="card-body">
           <div className="container border-bottom d-flex">
             <div className="col-md-2">
@@ -109,23 +109,23 @@ export default function NavbarFull() {
       </div>
 
       <div className="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-            <div className="offcanvas-header">
-              <h5 className="offcanvas-title" id="offcanvasExampleLabel">SecondHand</h5>
-              <button type="button" className="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-            <div className="offcanvas-body">
-              <p>Notifikasi</p>
-              <p>Daftar Jual</p>
-              <p>Akun Saya</p>
-            </div>
-          </div>
+        <div className="offcanvas-header">
+          <h5 className="offcanvas-title" id="offcanvasExampleLabel">SecondHand</h5>
+          <button type="button" className="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div className="offcanvas-body">
+          <p>Notifikasi</p>
+          <p>Daftar Jual</p>
+          <p>Akun Saya</p>
+        </div>
+      </div>
 
 
-      <Link to="/login">
+      {/* <Link to="/login">
         <button className="btn btn-primary" type="submit">
           Button
         </button>
-      </Link>
+      </Link> */}
     </>
   );
 }
