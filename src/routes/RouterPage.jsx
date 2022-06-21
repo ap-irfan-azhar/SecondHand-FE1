@@ -8,6 +8,7 @@ import Register from "../pages/Register";
 import Buyer from "../pages/Buyer";
 import HalamanProduk from "../pages/Seller/HalamanProduk";
 import InfoPenawar from '../pages/Seller/InfoPenawar';
+import DaftarJual from '../pages/Seller/DaftarJual';
 
 const RouterPage = () => {
   return (
@@ -22,6 +23,7 @@ const RouterPage = () => {
           <Route path="/buyer" element={<Buyer />} />
 
           {/* Seller */}
+          <Route path="/seller/daftar-jual" element={<DaftarJual />} />
           <Route path="/seller/produk/detail" element={<HalamanProduk />} />
           <Route path="/seller/penawaran" element={<InfoPenawar />} />
         </Routes>
