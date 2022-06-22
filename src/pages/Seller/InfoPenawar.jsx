@@ -4,8 +4,6 @@ import { AiOutlineArrowLeft } from 'react-icons/ai';
 import { FaWhatsapp } from 'react-icons/fa';
 import CardName from '../../components/Card/CardName';
 import Modal from 'react-bootstrap/Modal';
-import ModalDialog from 'react-bootstrap/ModalDialog'
-import Button from 'react-bootstrap/Button';
 
 const InfoPenawar = () => {
 

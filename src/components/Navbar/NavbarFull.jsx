@@ -73,7 +73,12 @@ export default function NavbarFull() {
             {login ? (
               <ul className="navbar-nav ms-auto mb-2 mb-lg-0 d-flex flex-row">
               <li className="nav-item">
-                <a className="nav-link"><AiOutlineUnorderedList size={20}/></a>
+                <a className="nav-link">
+                  <Link to="/seller/penawaran" className="text-decoration-none text-dark">
+                      <AiOutlineUnorderedList size={20}/>
+                  </Link>
+                  
+                </a>
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="#" onClick={display}>
