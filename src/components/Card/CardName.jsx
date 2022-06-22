@@ -5,7 +5,7 @@ const CardName = () => {
     <div className="card shadow round my-4">
         <div className="card-body">
 
-            <div className="d-flex align-items-center ps-3">
+            <div className="d-flex align-items-center">
 
                 <div className="flex-shrink-0">
                     {/* <div className="d-contents"> */}
