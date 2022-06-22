@@ -45,7 +45,11 @@ export default function NavbarFull() {
       <nav className="navbar navbar-expand-lg navbar-light bg-light mb-4">
         <div className="container">
           <div className="d-flex">
-            <span className="navbar-brand mb-0 h1 order-2">Navbar</span>
+            <span className="navbar-brand mb-0 h1 order-2">
+              <Link to="/seller/daftar-jual" className="text-decoration-none text-dark">
+                Navbar
+              </Link>
+            </span>
             {/* <div className="navbar-toggler order-1 border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <AiOutlineUnorderedList size={20}/>
             </div> */}
@@ -94,6 +98,7 @@ export default function NavbarFull() {
               <img src="https://via.placeholder.com/150" className="img-fluid rounded" alt="..."/>
             </div>
             <div className="col-md-10 ps-4">
+
               <div className="card-body p-0">
                 <p className="text-muted fs-6 mb-0" style={{fontSize:10}}>
                   <small>Penawaran produk</small>
@@ -103,7 +108,16 @@ export default function NavbarFull() {
                 <p className="card-text mb-0">Rp 250.000</p>
                 <p className="card-text mb-3">Ditawar Rp 200.000</p>
               </div>
+
             </div>
+            
+          </div>
+
+          <div className="text-center mb-1 mt-3" >
+            <Link to="/seller/notifikasi">
+              <small>Lihat semua</small>
+              
+            </Link>
           </div>
         </div>
       </div>
@@ -114,8 +128,16 @@ export default function NavbarFull() {
           <button type="button" className="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div className="offcanvas-body">
-          <p>Notifikasi</p>
-          <p>Daftar Jual</p>
+          <p>
+            <Link to="/seller/notifikasi" className="text-decoration-none text-dark">
+              Notifikasi
+            </Link>
+          </p>
+          <p>
+            <Link to="/seller/daftar-jual" className="text-decoration-none text-dark">
+              Daftar Jual
+            </Link>
+          </p>
           <p>Akun Saya</p>
         </div>
       </div>
