@@ -22,6 +22,29 @@ code {
 
 } */
 
+.border-dashed{
+  border: 1px dashed grey !important ;
+  border-width: 7px;
+}
+
+.bg-grey{
+  background-color: #EEEEEE;
+}
+
+.card-child{
+  flex-basis: 32%;
+}
+
+/* FONT SIZE */
+
+.font-20{
+  font-size: 20px;
+}
+
+.font-16{
+  font-size: 16px;
+}
+
 .round {
   border-radius: 15px !important;
 }
@@ -42,24 +65,10 @@ code {
   width: 80%;
 }
 
-/* FONT SIZE */
-
-.font-20{
-  font-size: 20px;
+.w_360{
+  width: 360px;
 }
 
-.font-16{
-  font-size: 16px;
-}
-
-.border-dashed{
-  border: 1px dashed grey !important ;
-  border-width: 7px;
-}
-
-.card-child{
-  flex-basis: 32%;
-}
 
 @media only screen and (max-width: 576px) {
   .card-sm-child{
