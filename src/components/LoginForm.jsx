@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate ,Link} from "react-router-dom";
+import { Navigate, Link } from "react-router-dom";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
@@ -21,7 +21,7 @@ const Login = (props) => {
   const form = useRef();
   const checkBtn = useRef();
 
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -30,9 +30,9 @@ const Login = (props) => {
 
   const dispatch = useDispatch(); //Dia akan memantik action untuk mengakses global store dan atau api endpoint
 
-  const onChangeUsername = (e) => {
-    const username = e.target.value;
-    setUsername(username);
+  const onChangeEmail = (e) => {
+    const email = e.target.value;
+    setEmail(email);
   };
 
   const onChangePassword = (e) => {
@@ -47,7 +47,7 @@ const Login = (props) => {
 
     if (checkBtn.current.context._errors.length === 0) {
       //Task 5. Memantik action login, untuk melakukan proses autentikasi, lalu kita cari action login()
-      dispatch(login(username, password))
+      dispatch(login(email, password))
         .then(() => {
           //Proses 6. Jika berhasil akan masuk ke halaman /profile
           props.history.push("/buyer");
@@ -71,23 +71,23 @@ const Login = (props) => {
       <Form
         onSubmit={handleLogin}
         ref={form}
-        className="bg-white d-flex flex-column justify-content-center w-100 p-5"
+        className="bg-white d-flex flex-column justify-content-center w-fluid p-5"
       >
-        <h3 className="mb-3">Masuk</h3>
+        <h3 className="mb-4 fw-bold">Masuk</h3>
 
-        <div className="mb-3">
-          <label htmlFor="username">Username</label>
+        <div className="mb-4">
+          <label htmlFor="username">Email</label>
           <input
             type="text"
             className="form-control"
             name="username"
-            value={username}
-            onChange={onChangeUsername}
+            value={email}
+            onChange={onChangeEmail}
             validation={[required]}
           />
         </div>
 
-        <div className="mb-3">
+        <div className="mb-4">
           <label htmlFor="password">Password</label>
           <Input
             type="password"
@@ -99,27 +99,26 @@ const Login = (props) => {
           />
         </div>
 
-        <div className="mb-3">
-          <button className="btn btn-primary btn-block" disabled={loading}>
-            {loading && (
-              <span className="spinner-border spinner-border-sm"></span>
-            )}
-            <span>Login</span>
-          </button>
-        </div>
+        <button className="btn btn-primary btn-block mb-3" disabled={loading}>
+          {loading && (
+            <span className="spinner-border spinner-border-sm"></span>
+          )}
+          <span>Login</span>
+        </button>
 
         {message && (
-          <div className="mb-3">
+          <div className="mb-4">
             <div className="alert alert-danger" role="alert">
               {message}
             </div>
           </div>
         )}
         <CheckButton style={{ display: "none" }} ref={checkBtn} />
-        <h6>Belum punya akun?</h6>
-        <Link to={"/register"} className="nav-link">
-          Register
-        </Link>
+        <div className="mt-3">
+          <h6>
+            Belum punya akun? <Link to="/register" className="text-decoration-none">Daftar di sini</Link>
+          </h6>
+        </div>
       </Form>
     </>
   );

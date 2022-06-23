@@ -5,6 +5,7 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import { isEmail } from "validator";
+import {Link} from  'react-router-dom';
 
 // proses 7 menuju ke folder actions/auth.js
 import { register } from "../actions/auth";
@@ -103,7 +104,7 @@ const Register = () => {
       ref={form}
       className="bg-white d-flex flex-column justify-content-center w-100 p-5"
     >
-      <h3 className="mb-3">Registrasi</h3>
+      <h3 className="mb-3 fw-bold">Registrasi</h3>
       {!successful && (
         <div>
           <div className="form-group mb-3">
@@ -142,7 +143,7 @@ const Register = () => {
             />
           </div>
           {/* Task 2, button Sign up */}
-          <div className="form-group mb-3">
+          <div className="form-group mb-3 w-fluid">
             <button className="btn btn-primary btn-block">Sign Up</button>
           </div>
         </div>
@@ -161,6 +162,11 @@ const Register = () => {
         </div>
       )}
       <CheckButton style={{ display: "none" }} ref={checkBtn} />
+      <div className="mt-3">
+          <h6>
+            Sudah punya akun? <Link to="/login" className="text-decoration-none"> di sini</Link>
+          </h6>
+        </div>
     </Form>
   );
 };

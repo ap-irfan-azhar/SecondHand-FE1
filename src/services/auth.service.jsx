@@ -12,11 +12,11 @@ const register = (username, email, password) => {
   });
 };
 
-const login = (username, password) => {
+const login = (email, password) => {
   //Bakal return suatu object
   return axios
-    .post(API_URL + "login?", {
-      username,
+    .post(API_URL + "login", {
+      email,
       password,
     })
     .then((response) => {

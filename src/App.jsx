@@ -1,9 +1,22 @@
 import React from "react";
-import RouterPage from "./routes/RouterPage";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { NavbarTitle } from "./components/Navbar/NavbarTitle";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 function App() {
   return (
-    <RouterPage/>
+    <Router>
+      {/* <NavbarTitle data="data"/> */}
+      <main>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Routes>
+      </main>
+    </Router>
   );
 }
 
