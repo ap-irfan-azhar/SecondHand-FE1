@@ -7,8 +7,10 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Buyer from "../pages/Buyer";
 import HalamanProduk from "../pages/Seller/HalamanProduk";
+import ProdukDetail from "../pages/Buyer/ProdukDetail";
 import InfoPenawar from '../pages/Seller/InfoPenawar';
 import DaftarJual from '../pages/Seller/DaftarJual';
+import Notifikasi from '../pages/Seller/Notifikasi';
 
 const RouterPage = () => {
   return (
@@ -22,10 +24,14 @@ const RouterPage = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/buyer" element={<Buyer />} />
 
+          {/* Buyer */}
+          <Route path="/produk/detail" element={<ProdukDetail />} />
+
           {/* Seller */}
           <Route path="/seller/daftar-jual" element={<DaftarJual />} />
           <Route path="/seller/produk/detail" element={<HalamanProduk />} />
           <Route path="/seller/penawaran" element={<InfoPenawar />} />
+          <Route path="/seller/notifikasi" element={<Notifikasi />} />
         </Routes>
       </main>
     </Router>

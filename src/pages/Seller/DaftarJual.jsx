@@ -4,6 +4,7 @@ import { AiOutlineArrowRight,AiOutlineHeart,AiOutlinePlus } from 'react-icons/ai
 import { HiOutlineCube } from 'react-icons/hi';
 import { FiDollarSign } from 'react-icons/fi';
 import NavbarFull from '../../components/Navbar/NavbarFull';
+import { Link } from 'react-router-dom';
 
 const DaftarJual = () => {
   return (
@@ -92,7 +93,11 @@ const DaftarJual = () => {
                             <div className="card card-child card-sm-child m-1">
                                 <img src="https://via.placeholder.com/200x100.png" className="card-img-top" alt="..."/>
                                 <div className="card-body">
-                                    <p className="card-text mb-0">Jam Tangan</p>
+                                    <p className="card-text mb-0">
+                                        <Link to="/seller/produk/detail" className="text-decoration-none text-dark">
+                                        Jam Tangan
+                                        </Link>
+                                    </p>
                                     <p className="card-text text-muted mb-1"><small>Aksesoris</small></p>
                                     <p className="card-text mb-0">Rp. 250.000</p>
                                 </div>
@@ -110,7 +115,11 @@ const DaftarJual = () => {
                             <div className="card card-child card-sm-child m-1">
                                 <img src="https://via.placeholder.com/200x100.png" className="card-img-top" alt="..."/>
                                 <div className="card-body">
-                                    <p className="card-text mb-0">Jam Tangan</p>
+                                    <p className="card-text mb-0">
+                                        <Link to="/seller/produk/detail" className="text-decoration-none text-dark">
+                                        Jam Tangan
+                                        </Link>
+                                    </p>
                                     <p className="card-text text-muted mb-1"><small>Aksesoris</small></p>
                                     <p className="card-text mb-0">Rp. 250.000</p>
                                 </div>
@@ -119,7 +128,11 @@ const DaftarJual = () => {
                             <div className="card card-child card-sm-child m-1">
                                 <img src="https://via.placeholder.com/200x100.png" className="card-img-top" alt="..."/>
                                 <div className="card-body">
-                                    <p className="card-text mb-0">Jam Tangan</p>
+                                    <p className="card-text mb-0">
+                                        <Link to="/seller/produk/detail" className="text-decoration-none text-dark">
+                                        Jam Tangan
+                                        </Link>
+                                    </p>
                                     <p className="card-text text-muted mb-1"><small>Aksesoris</small></p>
                                     <p className="card-text mb-0">Rp. 250.000</p>
                                 </div>
@@ -128,7 +141,11 @@ const DaftarJual = () => {
                             <div className="card card-child card-sm-child m-1">
                                 <img src="https://via.placeholder.com/200x100.png" className="card-img-top" alt="..."/>
                                 <div className="card-body">
-                                    <p className="card-text mb-0">Jam Tangan</p>
+                                    <p className="card-text mb-0">
+                                        <Link to="/seller/produk/detail" className="text-decoration-none text-dark">
+                                        Jam Tangan
+                                        </Link>
+                                    </p>
                                     <p className="card-text text-muted mb-1"><small>Aksesoris</small></p>
                                     <p className="card-text mb-0">Rp. 250.000</p>
                                 </div>
