@@ -47,9 +47,9 @@ export const register = (username, email, password) => (dispatch) => {
   );
 };
 
-export const login = (username, password) => (dispatch) => {
+export const login = (email, password) => (dispatch) => {
   return (
-    AuthService.login(username, password)
+    AuthService.login(email, password)
       //Proses action Login ke-2, dia menunggu konfirmasi dari proses AuthService
       .then(
         (data) => {

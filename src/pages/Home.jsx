@@ -1,10 +1,10 @@
 import React from "react";
-import Navbar from "../components/Navbar";
+import NavbarFull from "../components/Navbar/NavbarFull";
 
 export default function Home() {
   return (
     <>
-    <Navbar />
+      <NavbarFull />
       <div>
         <h1>Landing Page</h1>
       </div>
