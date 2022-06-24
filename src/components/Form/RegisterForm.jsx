@@ -8,7 +8,7 @@ import { isEmail } from "validator";
 import {Link} from  'react-router-dom';
 
 // proses 7 menuju ke folder actions/auth.js
-import { register } from "../actions/auth";
+import { register } from "../../actions/auth";
 
 const required = (value) => {
   if (!value) {
@@ -113,6 +113,7 @@ const Register = () => {
               type="text"
               className="form-control"
               name="username"
+              placeholder="Nama Lengkap"
               value={username}
               onChange={onChangeUsername}
               validations={[required, vusername]}
@@ -125,6 +126,7 @@ const Register = () => {
               type="text"
               className="form-control"
               name="email"
+              placeholder="Contoh: johndee@gmail.com"
               value={email}
               onChange={onChangeEmail}
               validations={[required, validEmail]}
@@ -137,6 +139,7 @@ const Register = () => {
               type="password"
               className="form-control"
               name="password"
+              placeholder="Masukkan Password"
               value={password}
               onChange={onChangePassword}
               validations={[required, vpassword]}

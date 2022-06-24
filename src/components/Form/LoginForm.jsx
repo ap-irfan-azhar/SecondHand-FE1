@@ -5,7 +5,7 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 
-import { login } from "../actions/auth";
+import { login } from "../../actions/auth";
 
 const required = (value) => {
   if (!value) {
@@ -81,6 +81,7 @@ const Login = (props) => {
             type="text"
             className="form-control"
             name="username"
+            placeholder="Contoh: johndee@gmail.com"
             value={email}
             onChange={onChangeEmail}
             validation={[required]}
@@ -93,6 +94,7 @@ const Login = (props) => {
             type="password"
             className="form-control"
             name="password"
+            placeholder="Masukkan Password"
             value={password}
             onChange={onChangePassword}
             validations={[required]}
