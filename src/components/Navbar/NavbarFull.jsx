@@ -73,20 +73,20 @@ export default function NavbarFull() {
             {login ? (
               <ul className="navbar-nav ms-auto mb-2 mb-lg-0 d-flex flex-row">
               <li className="nav-item">
-                <a className="nav-link">
+                <div className="nav-link">
                   <Link to="/seller/penawaran" className="text-decoration-none text-dark">
                       <AiOutlineUnorderedList size={20}/>
                   </Link>
                   
-                </a>
+                </div>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#" onClick={display}>
+                <div className="nav-link" href="#" onClick={display}>
                   <IoMdNotificationsOutline size={20}/>
-                </a>
+                </div>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#"><BiUser size={20}/></a>
+                <div className="nav-link" href="#"><BiUser size={20}/></div>
               </li>
             </ul>
             )
@@ -127,7 +127,7 @@ export default function NavbarFull() {
         </div>
       </div>
 
-      <div className="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+      <div className="offcanvas offcanvas-start" tabIndex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
         <div className="offcanvas-header">
           <h5 className="offcanvas-title" id="offcanvasExampleLabel">SecondHand</h5>
           <button type="button" className="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
