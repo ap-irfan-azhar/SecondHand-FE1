@@ -12,6 +12,7 @@ import InfoPenawar from '../pages/Seller/InfoPenawar';
 import DaftarJual from '../pages/Seller/DaftarJual';
 import Notifikasi from '../pages/Seller/Notifikasi';
 import InfoProduk from '../pages/Seller/InfoProduk';
+import DaftarProduk from '../pages/Buyer/DaftarProduk';
 
 const RouterPage = () => {
   return (
@@ -27,6 +28,7 @@ const RouterPage = () => {
 
 
           {/* Buyer */}
+          <Route path="/produk" element={<DaftarProduk />} />
           <Route path="/produk/detail" element={<ProdukDetail />} />
 
           {/* Seller */}
