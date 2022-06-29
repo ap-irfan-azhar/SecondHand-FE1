@@ -15,7 +15,7 @@ const CardName = () => {
 
                 <div className="flex-grow-1 ms-3">
                     
-                    <button type="button" class="btn btn-outline-primary btn-sm float-end">Edit</button>
+                    <button type="button" className="btn btn-outline-primary btn-sm float-end">Edit</button>
                     
                     <h6 className="card-title">Nama Penjual</h6>
                     <p className="card-text text-muted">

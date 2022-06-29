@@ -11,11 +11,11 @@ const DaftarProduk = () => {
 
     const [produk, getProduk] = useState([]);
 
-    const getsProduk = () =>{
+    const getsProduk = async () =>{
         axios.get('https://secondhand-binar.herokuapp.com/product/')
         .then((response) =>{
             const data = response;
-            getProduk(data);
+            getProduk(data.data);
         })
         .catch((err) =>{
             console.log(err);
@@ -24,8 +24,8 @@ const DaftarProduk = () => {
 
     useEffect(() => {
         getsProduk();
-        
-    },[])
+        console.log('halo')
+    },[]);
 
 
   return (
@@ -40,19 +40,19 @@ const DaftarProduk = () => {
                     <div className="row">
 
                         <div className="d-block d-sm-none mb-3">
-                            <button type="button" class="btn btn-success round">
+                            <button type="button" className="btn btn-success round">
                                 <HiOutlineCube/>
                                 <small>Success</small>
                                 
                             </button>
 
-                            <button type="button" class="btn btn-success round mx-2">
+                            <button type="button" className="btn btn-success round mx-2">
                                 <AiOutlineHeart/>
                                 <small>Disukai</small>
                                 
                             </button>
 
-                            <button type="button" class="btn btn-success round">
+                            <button type="button" className="btn btn-success round">
                                 <FiDollarSign/>
                                 <small>Terjual</small>
                                 
@@ -64,8 +64,8 @@ const DaftarProduk = () => {
                             <div className="card shadow round">
                                 <div className="card-body">
                                     <h6 className="fw-bold font-16">Kategori</h6>
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group-item d-flex justify-content-between align-items-center px-1">
+                                    <ul className="list-group list-group-flush">
+                                        <li className="list-group-item d-flex justify-content-between align-items-center px-1">
                                             <div>
                                                 <HiOutlineCube className="me-2"/>Semua Produk
 
@@ -75,7 +75,7 @@ const DaftarProduk = () => {
                                             </div>
                                         </li>
 
-                                        <li class="list-group-item d-flex justify-content-between align-items-center px-1">
+                                        <li className="list-group-item d-flex justify-content-between align-items-center px-1">
                                             <div>
                                                 <AiOutlineHeart className="me-2"/>Diminati
 
@@ -85,7 +85,7 @@ const DaftarProduk = () => {
                                             </div>
                                         </li>
 
-                                        <li class="list-group-item d-flex justify-content-between align-items-center px-1">
+                                        <li className="list-group-item d-flex justify-content-between align-items-center px-1">
                                             <div>
                                                 <FiDollarSign className="me-2"/>Terjual
 
@@ -111,20 +111,21 @@ const DaftarProduk = () => {
                             </div>
 
                             { produk.map((e,key)=>{ 
-                                return `
-                                <div className="card card-child card-sm-child m-1">
+                                return (
+                                <div key={key} className="card card-child card-sm-child m-1">
                                     <img src="https://via.placeholder.com/200x100.png" className="card-img-top" alt="..."/>
                                     <div className="card-body">
                                         <p className="card-text mb-0">
-                                            <Link to="/seller/produk/detail" className="text-decoration-none text-dark">
-                                            ${e.name}
+                                            <Link to={`/produk/detail/${e.id}`} className="text-decoration-none text-dark">
+                                            {e.name}
                                             </Link>
                                         </p>
-                                        <p className="card-text text-muted mb-1"><small>Aksesoris</small></p>
-                                        <p className="card-text mb-0">Rp. ${e.price}</p>
+                                        <p className="card-text text-muted mb-1"><small>{e.status}</small></p>
+                                        <p className="card-text mb-0">Rp. {e.price}</p>
                                     </div>
                                 </div>
-                                `;
+                                )
+                                
                             }) }
                         
 

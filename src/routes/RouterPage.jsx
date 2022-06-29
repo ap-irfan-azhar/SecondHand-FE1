@@ -29,7 +29,7 @@ const RouterPage = () => {
 
           {/* Buyer */}
           <Route path="/produk" element={<DaftarProduk />} />
-          <Route path="/produk/detail" element={<ProdukDetail />} />
+          <Route path="/produk/detail/:id" element={<ProdukDetail />} />
 
           {/* Seller */}
           <Route path="/seller/daftar-jual" element={<DaftarJual />} />
