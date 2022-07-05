@@ -1,9 +1,31 @@
-import React from 'react'
+import React,{ useState,useEffect} from 'react'
+import { useParams } from 'react-router';
+import axios from 'axios';
 import NavbarFull from '../../components/Navbar/NavbarFull';
 import CarouselItem from '../../components/Carousel/CarouselItem';
 import CardName from '../../components/Card/CardName';
 
 const HalamanProduk = () => {
+
+    const { id } = useParams();
+    const [produk, getProduk] = useState({});
+
+    const getsProduk = async () =>{
+        axios.get('https://secondhand-binar.herokuapp.com/product/' + id)
+        .then((response) =>{
+            const data = response;
+            getProduk(data.data);
+        })
+        .catch((err) =>{
+            console.log(err);
+        })
+    }
+
+    useEffect(() => {
+        getsProduk();
+        console.log('halo')
+    },[produk]);
+
   return (
     <div className="mb-5">
         <NavbarFull/>
@@ -16,8 +38,8 @@ const HalamanProduk = () => {
 
                             <div className="card mt-4 round">
                                 <div className="card-body">
-                                    <h5 className="card-title fw-bold">Card title</h5>
-                                    <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                    <h5 className="card-title fw-bold">{produk.name}</h5>
+                                    <p className="card-text">{produk.description}</p>
                                 </div>
                             </div>
                         </div>
@@ -25,9 +47,9 @@ const HalamanProduk = () => {
 
                             <div className="card shadow round">
                                 <div className="card-body">
-                                    <h5 className="card-title mb-3">Jam Tangan Casio</h5>
-                                    <h6 className="card-subtitle mb-2 text-muted">Aksesoris</h6>
-                                    <p className="card-text">Rp 250.000</p>
+                                    <h5 className="card-title mb-3">{produk.name}</h5>
+                                    <h6 className="card-subtitle mb-2 text-muted">{produk.status}</h6>
+                                    <p className="card-text">Rp {produk.price}</p>
 
                                     <div className="d-grid gap-2">
                                         <button className="btn btn-primary round" type="button">Terbitakan</button>

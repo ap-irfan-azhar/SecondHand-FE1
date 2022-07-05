@@ -4,12 +4,18 @@ import styled from 'styled-components';
 import { IoMdNotificationsOutline } from 'react-icons/io';
 import { AiOutlineUnorderedList } from 'react-icons/ai';
 import { BiUser,BiSearch } from 'react-icons/bi';
+import {useSelector,useDispatch} from 'react-redux'
+import axios from "axios";
+import allActions from "../../actions"
 
 
 export default function NavbarFull() {
 
   let [noti, setNoti] = useState(false);
   let [login, setLogin] = useState(true);
+  let [nama, setNama] = useState('');
+
+  const dispatch = useDispatch()
 
   const Input = styled.input`
     background-color : #EEEEEE;
@@ -40,6 +46,18 @@ export default function NavbarFull() {
     }
   }
 
+  const search = async () => {
+    axios.get('https://secondhandbebin-stag.herokuapp.com/product/findByNameLike2/?',{ params: { name: nama } })
+    .then((response) =>{
+        const data = response;
+        console.log(data.data);
+        dispatch(allActions.produk.searchData(data.data));
+    })
+    .catch((err) =>{
+        console.log(err);
+    })
+  }
+
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-light bg-light mb-4">
@@ -63,8 +81,11 @@ export default function NavbarFull() {
 
             <form className="d-flex col-10 col-sm-8 col-md-6 col-lg-4">
               <div className="form-group mb-0 d-flex clearfix position-relative" style={{width : `100%`}}>
-                <Input placeholder="Cari disini .."/>
-                <BtnSearch>
+                <Input placeholder="Cari disini .." value={nama} onChange={(e)=>{
+                  e.preventDefault();
+                  setNama(e.target.value)}}
+                />
+                <BtnSearch onClick={search}>
                   <BiSearch size={20} />
                 </BtnSearch>
               </div>

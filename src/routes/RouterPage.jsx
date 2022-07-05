@@ -34,7 +34,7 @@ const RouterPage = () => {
           {/* Seller */}
           <Route path="/seller/daftar-jual" element={<DaftarJual />} />
           <Route path="/seller/produk/info-produk" element={<InfoProduk />} />
-          <Route path="/seller/produk/detail" element={<HalamanProduk />} />
+          <Route path="/seller/produk/detail/:id" element={<HalamanProduk />} />
           <Route path="/seller/penawaran" element={<InfoPenawar />} />
           <Route path="/seller/notifikasi" element={<Notifikasi />} />
         </Routes>

@@ -6,13 +6,17 @@ import { FiDollarSign } from 'react-icons/fi';
 import NavbarFull from '../../components/Navbar/NavbarFull';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import {useSelector} from 'react-redux'
+import allActions from '../../actions';
 
 const DaftarProduk = () => {
 
     const [produk, getProduk] = useState([]);
 
+    const dataProdukGlobal = useSelector(state => state.produk);
+
     const getsProduk = async () =>{
-        axios.get('https://secondhand-binar.herokuapp.com/product/')
+        axios.get('https://secondhandbebin-stag.herokuapp.com/product/')
         .then((response) =>{
             const data = response;
             getProduk(data.data);
@@ -24,8 +28,13 @@ const DaftarProduk = () => {
 
     useEffect(() => {
         getsProduk();
-        console.log('halo')
-    },[]);
+        
+        console.log(produk);
+
+        if(dataProdukGlobal.data != null){
+            getProduk(dataProdukGlobal.data);
+        }
+    },[dataProdukGlobal]);
 
 
   return (
@@ -109,11 +118,14 @@ const DaftarProduk = () => {
                                 </div>
 
                             </div>
+                            {
+                                
+                            }
 
                             { produk.map((e,key)=>{ 
                                 return (
                                 <div key={key} className="card card-child card-sm-child m-1">
-                                    <img src="https://via.placeholder.com/200x100.png" className="card-img-top" alt="..."/>
+                                    <img src={e.photoUrl} className="card-img-top" alt="..."/>
                                     <div className="card-body">
                                         <p className="card-text mb-0">
                                             <Link to={`/produk/detail/${e.id}`} className="text-decoration-none text-dark">
