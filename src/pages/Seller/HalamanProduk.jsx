@@ -4,6 +4,7 @@ import axios from 'axios';
 import NavbarFull from '../../components/Navbar/NavbarFull';
 import CarouselItem from '../../components/Carousel/CarouselItem';
 import CardName from '../../components/Card/CardName';
+import { Link } from 'react-router-dom';
 
 const HalamanProduk = () => {
 
@@ -11,7 +12,7 @@ const HalamanProduk = () => {
     const [produk, getProduk] = useState({});
 
     const getsProduk = async () =>{
-        axios.get('https://secondhand-binar.herokuapp.com/product/' + id)
+        axios.get('https://secondhandbebin-stag.herokuapp.com/product/' + id)
         .then((response) =>{
             const data = response;
             getProduk(data.data);
@@ -24,7 +25,7 @@ const HalamanProduk = () => {
     useEffect(() => {
         getsProduk();
         console.log('halo')
-    },[produk]);
+    },[]);
 
   return (
     <div className="mb-5">
@@ -53,7 +54,7 @@ const HalamanProduk = () => {
 
                                     <div className="d-grid gap-2">
                                         <button className="btn btn-primary round" type="button">Terbitakan</button>
-                                        <button className="btn btn-outline-primary round" type="button">Edit</button>
+                                        <Link to={`/seller/produk/edit/${produk.id}`} className="btn btn-outline-primary round" type="button">Edit</Link>
                                     </div>
                                 </div>
                             </div>

@@ -32,9 +32,6 @@ export default function InfoProdukForm() {
         formData.append('price', harga);
         formData.append('description', desc);
         formData.append('status', status);
-
-        console.log(files);
-
         
         const config = {     
           headers: { 'content-type': 'multipart/form-data' }
@@ -58,9 +55,6 @@ export default function InfoProdukForm() {
       }
 
   }
-
-
-  
 
   return (
     <>
