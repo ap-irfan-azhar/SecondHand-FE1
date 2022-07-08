@@ -13,6 +13,7 @@ import DaftarJual from '../pages/Seller/DaftarJual';
 import Notifikasi from '../pages/Seller/Notifikasi';
 import InfoProduk from '../pages/Seller/InfoProduk';
 import DaftarProduk from '../pages/Buyer/DaftarProduk';
+import EditProduk from '../pages/Seller/EditProduk';
 
 const RouterPage = () => {
   return (
@@ -34,7 +35,8 @@ const RouterPage = () => {
           {/* Seller */}
           <Route path="/seller/daftar-jual" element={<DaftarJual />} />
           <Route path="/seller/produk/info-produk" element={<InfoProduk />} />
-          <Route path="/seller/produk/detail" element={<HalamanProduk />} />
+          <Route path="/seller/produk/edit/:id" element={<EditProduk />} />
+          <Route path="/seller/produk/detail/:id" element={<HalamanProduk />} />
           <Route path="/seller/penawaran" element={<InfoPenawar />} />
           <Route path="/seller/notifikasi" element={<Notifikasi />} />
         </Routes>

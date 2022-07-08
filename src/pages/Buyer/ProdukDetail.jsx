@@ -30,7 +30,7 @@ const ProdukDetail = () => {
     useEffect(() => {
         getsProduk();
         console.log('halo')
-    },[]);
+    },[produk]);
 
   return (
     <>
