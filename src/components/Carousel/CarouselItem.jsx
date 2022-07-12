@@ -1,18 +1,18 @@
 import React from 'react'
 
-const CarouselItem = () => {
+const CarouselItem = ({data}) => {
   return (
     <div>
         <div id="carouselExampleControls" className="carousel slide" data-bs-ride="carousel">
             <div className="carousel-inner round">
                 <div className="carousel-item active">
-                <img src="https://via.placeholder.com/600x400.png?text=Produk" className="d-block w-100" alt="..."/>
+                <img src={data} className="d-block w-100" alt="..."/>
                 </div>
                 <div className="carousel-item">
-                <img src="https://via.placeholder.com/600x400.png?text=Produk" className="d-block w-100" alt="..."/>
+                <img src={data} className="d-block w-100" alt="..."/>
                 </div>
                 <div className="carousel-item">
-                <img src="https://via.placeholder.com/600x400.png?text=Produk" className="d-block w-100" alt="..."/>
+                <img src={data} className="d-block w-100" alt="..."/>
                 </div>
             </div>
             <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">

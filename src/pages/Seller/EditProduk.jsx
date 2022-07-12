@@ -46,27 +46,33 @@ const EditProduk = () => {
   
           const formData = new FormData();
   
-            formData.append('file', files);
+          formData.append('file', files);
           formData.append('name', nama);
           formData.append('categoriesId', kategori);
           formData.append('price', harga);
           formData.append('description', desc);
           formData.append('status', status);
-          
+
+  
           const config = {     
-            headers: { 'content-type': 'multipart/form-data' }
+            headers: { 
+              'content-type': 'multipart/form-data',
+              'Access-Control-Allow-Origin': '*',
+              'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
+              'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
+             }
           }
   
           try {
             let register = await axios.put(
-              'https://secondhandbebin-stag.herokuapp.com/product/' + id, 
+              `https://secondhandbebin-stag.herokuapp.com/product/update1?id=${id}`, 
               formData,
               config
             );
   
             let result = await register;
             
-            navigate('/seller/daftar-jual');
+            navigate('/seller/produk/detail/'+ id);
   
         }catch (error) {
             if (error.response) {

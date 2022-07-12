@@ -56,6 +56,18 @@ export default function InfoProdukForm() {
 
   }
 
+  const preview = () => {
+    let dataPreview = {
+      name: nama,
+      status: status,
+      price:harga,
+      categories: kategori,
+      description : desc
+    }
+    localStorage.setItem('produk', JSON.stringify(dataPreview));
+    navigate('/seller/produk/preview');
+  }
+
   return (
     <>
     <form onSubmit={sendFile}>
@@ -118,6 +130,7 @@ export default function InfoProdukForm() {
       <div className="row mt-5">
         <div className="p-0 pe-1">
           <button
+            onClick={preview}
             className="btn btn-outline-primary btn-action "
             type="button"
             id="preview"
