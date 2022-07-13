@@ -82,7 +82,6 @@ const EditProduk = () => {
   
     }
 
-
     useEffect(() => {
         getsProduk();
     },[]);
@@ -119,7 +118,7 @@ const EditProduk = () => {
                 <div className="row mb-3">
                 <label className="form-label">Kategori</label>
                 <select className="form-select rounded-3" value={kategori} onChange={(e) => setKategori(e.target.value)}>
-                    <option value="" disabled selected>
+                    <option value="" disabled>
                     Pilih Kategori
                     </option>
                     <option value="0">Hobi</option>
