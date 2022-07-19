@@ -10,7 +10,7 @@ export const NavbarTitle = (props) => {
                 <AiOutlineArrowLeft className="d-block d-lg-none" size={20}/>
                 <span className="navbar-brand d-none d-lg-block">
                   <Link to="/seller/daftar-jual" className="text-decoration-none text-dark">
-                    Navbar
+                    Admin
                   </Link>
                 </span>
                 {/* <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">

@@ -4,8 +4,9 @@ import { Navigate, Link } from "react-router-dom";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
+import { useNavigate } from 'react-router-dom';
 
-import { login } from "../../actions/auth";
+// import { login } from "../../actions/auth";
 
 const required = (value) => {
   if (!value) {
@@ -25,6 +26,8 @@ const Login = (props) => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const navigate = useNavigate();
+
   const { isLoggedIn } = useSelector((state) => state.auth);
   const { message } = useSelector((state) => state.message);
 
@@ -42,23 +45,38 @@ const Login = (props) => {
 
   const handleLogin = (e) => {
     e.preventDefault();
+    
 
-    form.current.validateAll();
+    //form.current.validateAll();
 
-    if (checkBtn.current.context._errors.length === 0) {
-      //Task 5. Memantik action login, untuk melakukan proses autentikasi, lalu kita cari action login()
-      dispatch(login(email, password))
-        .then(() => {
-          //Proses 6. Jika berhasil akan masuk ke halaman /profile
-          props.history.push("/buyer");
-          window.location.reload();
-        })
-        //Proses 7. Jika gagal dia return false
-        .catch(() => {
-          setLoading(false);
-        });
-    } else {
-      setLoading(false);
+    // if (checkBtn.current.context._errors.length === 0) {
+    //   //Task 5. Memantik action login, untuk melakukan proses autentikasi, lalu kita cari action login()
+    //   dispatch(login(email, password))
+    //     .then(() => {
+    //       //Proses 6. Jika berhasil akan masuk ke halaman /profile
+    //       props.history.push("/buyer");
+    //       window.location.reload();
+    //     })
+    //     //Proses 7. Jika gagal dia return false
+    //     .catch(() => {
+    //       setLoading(false);
+    //     });
+    // } else {
+    //   setLoading(false);
+    // }
+
+    
+
+    if(email === 'user'){
+      localStorage.setItem('role','user');
+      console.log("user");
+      navigate('/produk');
+      <Navigate to="/produk" />;
+    }else{
+      localStorage.setItem('role','admin');
+      console.log("admin");
+      navigate('/seller/daftar-jual');
+      <Navigate to="/seller/daftar-jual" />;
     }
   };
 
@@ -73,7 +91,7 @@ const Login = (props) => {
         ref={form}
         className="bg-white d-flex flex-column justify-content-center w-fluid p-5"
       >
-        <h3 className="mb-4 fw-bold">Masuk</h3>
+        <h3 className="mb-4 fw-bold">Masuk </h3>
 
         <div className="mb-4">
           <label htmlFor="username">Email</label>
@@ -101,7 +119,7 @@ const Login = (props) => {
           />
         </div>
 
-        <button className="btn btn-primary btn-block mb-3" disabled={loading}>
+        <button className="btn btn-primary btn-block mb-3" onClick={handleLogin} disabled={loading}>
           {loading && (
             <span className="spinner-border spinner-border-sm"></span>
           )}

@@ -1,7 +1,5 @@
 import React from 'react'
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import NavbarFull from "../components/Navbar/NavbarFull";
-import { NavbarTitle } from "../components/Navbar/NavbarTitle";
+import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from "react-router-dom";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
@@ -16,11 +14,22 @@ import DaftarProduk from '../pages/Buyer/DaftarProduk';
 import EditProduk from '../pages/Seller/EditProduk';
 import PreviewProduk from '../pages/Seller/PreviewProduk';
 
+
+const ProtectedRoute = ({role}) => {
+  const roles = localStorage.getItem('role');
+
+  if (role !== roles) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return <Outlet/>;
+};
+
 const RouterPage = () => {
   return (
+    
     <div>
         <Router>
-      {/* <NavbarTitle data="data"/> */}
       <main>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -30,17 +39,22 @@ const RouterPage = () => {
 
 
           {/* Buyer */}
-          <Route path="/produk" element={<DaftarProduk />} />
-          <Route path="/produk/detail/:id" element={<ProdukDetail />} />
+          <Route element={<ProtectedRoute role="user" />}>
+            <Route path="/produk" element={<DaftarProduk />} />
+            <Route path="/produk/detail/:id" element={<ProdukDetail />} />
+          </Route>
 
           {/* Seller */}
-          <Route path="/seller/daftar-jual" element={<DaftarJual />} />
-          <Route path="/seller/produk/add" element={<InfoProduk />} />
-          <Route path="/seller/produk/preview" element={<PreviewProduk />} />
-          <Route path="/seller/produk/edit/:id" element={<EditProduk />} />
-          <Route path="/seller/produk/detail/:id" element={<HalamanProduk />} />
-          <Route path="/seller/penawaran" element={<InfoPenawar />} />
-          <Route path="/seller/notifikasi" element={<Notifikasi />} />
+          <Route element={<ProtectedRoute role="admin" />}>
+            <Route path="/seller/daftar-jual" element={<DaftarJual />} />
+            <Route path="/seller/produk/add" element={<InfoProduk />} />
+            <Route path="/seller/produk/preview" element={<PreviewProduk />} />
+            <Route path="/seller/produk/edit/:id" element={<EditProduk />} />
+            <Route path="/seller/produk/detail/:id" element={<HalamanProduk />} />
+            <Route path="/seller/penawaran" element={<InfoPenawar />} />
+            <Route path="/seller/notifikasi" element={<Notifikasi />} />
+          </Route>
+
         </Routes>
       </main>
     </Router>

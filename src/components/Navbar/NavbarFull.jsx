@@ -7,10 +7,12 @@ import { BiUser,BiSearch } from 'react-icons/bi';
 import {useSelector,useDispatch} from 'react-redux'
 import axios from "axios";
 import allActions from "../../actions"
+import { useNavigate } from 'react-router-dom';
 
 
 export default function NavbarFull() {
 
+  const navigate = useNavigate();
   let [noti, setNoti] = useState(false);
   let [login, setLogin] = useState(true);
   let [nama, setNama] = useState('');
@@ -46,6 +48,11 @@ export default function NavbarFull() {
     }
   }
 
+  const logout = () => {
+    localStorage.clear();
+    navigate('/login');
+  }
+
   const search = async () => {
     axios.get('https://secondhandbebin-stag.herokuapp.com/product/findByNameLike2/?',{ params: { name: nama } })
     .then((response) =>{
@@ -65,7 +72,7 @@ export default function NavbarFull() {
           <div className="d-flex">
             <span className="navbar-brand mb-0 h1 order-2">
               <Link to="/seller/daftar-jual" className="text-decoration-none text-dark">
-                Navbar
+                Admin
               </Link>
             </span>
             {/* <div className="navbar-toggler order-1 border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -107,7 +114,9 @@ export default function NavbarFull() {
                 </div>
               </li>
               <li className="nav-item">
-                <div className="nav-link" href="#"><BiUser size={20}/></div>
+                <div className="nav-link list" onClick={logout}>
+                  <BiUser size={20}/>
+                </div>
               </li>
             </ul>
             )

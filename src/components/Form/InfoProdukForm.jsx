@@ -32,26 +32,34 @@ export default function InfoProdukForm() {
         formData.append('price', harga);
         formData.append('description', desc);
         formData.append('status', status);
+        formData.append('sellerId', 1);
         
         const config = {     
-          headers: { 'content-type': 'multipart/form-data' }
+          headers: { 
+            'content-type': 'multipart/form-data' ,
+          }
         }
 
-        try {
-          let register = await axios.post(
-            'https://secondhandbebin-stag.herokuapp.com/product/register', 
-            formData,
-            config
-          );
+        
+      
+
+        console.log(formData);
+
+      try {
+          let register = fetch('https://secondhandbebin-stag.herokuapp.com/product/register', {
+            method: "POST",
+            body: formData
+         })
 
           let result = await register;
           
           navigate('/seller/daftar-jual');
 
       }catch (error) {
-          if (error.response) {
-              console.log(error.response.data);
-          }
+        console.error(error.response.data);
+          // if (error.response) {
+          //     console.log(error.response);
+          // }
       }
 
   }

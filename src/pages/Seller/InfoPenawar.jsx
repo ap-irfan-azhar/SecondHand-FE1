@@ -1,11 +1,14 @@
-import React,{ useState} from 'react'
+import React,{ useState,useEffect} from 'react'
 import { NavbarTitle } from '../../components/Navbar/NavbarTitle';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 import { FaWhatsapp } from 'react-icons/fa';
 import CardName from '../../components/Card/CardName';
 import Modal from 'react-bootstrap/Modal';
+import axios from 'axios';
 
 const InfoPenawar = () => {
+
+    const [penawaran, setPenawaran] = useState([]);
 
     const [show, setShow] = useState(false);
     const [show2, setShow2] = useState(false);
@@ -15,6 +18,22 @@ const InfoPenawar = () => {
 
   const handleClose2 = () => setShow2(false);
   const handleShow2 = () => setShow2(true);
+
+    const getsPenawaran = async () =>{
+        axios.get('https://secondhandbebin-stag.herokuapp.com/offer/list')
+        .then((response) =>{
+            const data = response;
+            setPenawaran(data.data);
+        })
+        .catch((err) =>{
+            console.log(err);
+        })
+
+    }
+
+    useEffect(() => {
+        getsPenawaran();
+    },[]);
 
   return (
     <>
@@ -29,33 +48,37 @@ const InfoPenawar = () => {
                     <CardName />
                     <h6 className="my-4 fw-bold">Daftar Produkmu yang Ditawar</h6>
 
-                    <div className="card border-0 border-bottom">
-                        <div className="container px-2 d-flex">
-                            <div className="">
-                                <div>
-                                    <img src="https://via.placeholder.com/50" className="img-fluid rounded" alt="..."/>
+                    { penawaran.map((e,key)=>{ 
+                        return(
+                        <div key={key} className="card border-0 border-bottom">
+                            <div className="container px-2 d-flex">
+                                <div className="">
+                                    <div>
+                                        <img src="https://via.placeholder.com/50" className="img-fluid rounded" alt="..."/>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="w-100 ms-3">
-                                <div className="card-body p-0">
-                                    <p className="text-muted fs-6 mb-0" style={{fontSize:10}}>
-                                    <small>Penawaran produk</small>
-                                    <small className="float-end">20 Apr, 14:04</small>
-                                    </p>
-                                    <p className="card-text mb-0">Jam Tangan Casio</p>
-                                    <p className="card-text mb-0">Rp 250.000</p>
-                                    <p className="card-text mb-5">Ditawar Rp 200.000</p>
-                                </div>   
-                            </div>
+                                <div className="w-100 ms-3">
+                                    <div className="card-body p-0">
+                                        <p className="text-muted fs-6 mb-0" style={{fontSize:10}}>
+                                        <small>Penawaran produk</small>
+                                        <small className="float-end">20 Apr, 14:04</small>
+                                        </p>
+                                        <p className="card-text mb-0">Jam Tangan Casio</p>
+                                        <p className="card-text mb-0">Rp 250.000</p>
+                                        <p className="card-text mb-5">Ditawar Rp 200.000</p>
+                                    </div>   
+                                </div>
 
-                            <div className="position-absolute bottom-0 w-100 mb-2">
-                                <div className="float-none float-sm-end d-flex">
-                                    <button onClick={handleShow2} type="button" className="btn btn-sm btn-outline-primary me-2 px-4 flex-grow-1 round">Tolak</button>
-                                    <button onClick={handleShow1} type="button" className="btn btn-sm btn-primary flex-grow-1 px-4 round">Terima</button>
+                                <div className="position-absolute bottom-0 w-100 mb-2">
+                                    <div className="float-none float-sm-end d-flex">
+                                        <button onClick={handleShow2} type="button" className="btn btn-sm btn-outline-primary me-2 px-4 flex-grow-1 round">Tolak</button>
+                                        <button onClick={handleShow1} type="button" className="btn btn-sm btn-primary flex-grow-1 px-4 round">Terima</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                        )
+                    }) }
 
 
                 </div>

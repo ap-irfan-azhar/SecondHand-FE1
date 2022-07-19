@@ -6,6 +6,8 @@ import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import { isEmail } from "validator";
 import {Link} from  'react-router-dom';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 // proses 7 menuju ke folder actions/auth.js
 import { register } from "../../actions/auth";
@@ -54,6 +56,7 @@ const Register = () => {
   const form = useRef();
   const checkBtn = useRef();
 
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -78,7 +81,7 @@ const Register = () => {
     setPassword(password);
   };
   // #Task 4. menemukan fungsi handleregister yang berupa proses autentikasi
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
 
     setSuccessful(false);
@@ -96,6 +99,37 @@ const Register = () => {
         });
       //#Proses 6 if successful then return true dan apabila gagal maka akan catch false
     }
+
+    const formData = new FormData();
+
+    formData.append('username', username);
+    formData.append('email', email);
+    formData.append('password', password);
+
+    const config = {     
+      headers: { 'content-type': 'multipart/form-data' }
+    }
+
+    try {
+        let register = await axios.post(
+          'https://secondhandbebin-stag.herokuapp.com/api/user/register', 
+          formData,
+          config
+        );
+
+        let result = await register;
+        
+        if(result){
+          
+        }
+        navigate('/login');
+
+    }catch (error) {
+        if (error.response) {
+            console.log(error.response.data);
+        }
+    }
+
   };
 
   return (

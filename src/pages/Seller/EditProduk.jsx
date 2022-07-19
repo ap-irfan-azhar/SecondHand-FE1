@@ -64,11 +64,16 @@ const EditProduk = () => {
           }
   
           try {
-            let register = await axios.put(
-              `https://secondhandbebin-stag.herokuapp.com/product/update1?id=${id}`, 
-              formData,
-              config
-            );
+            // let register = await axios.put(
+            //   `https://secondhandbebin-stag.herokuapp.com/product/update1?id=${id}`, 
+            //   formData,
+            //   config
+            // );
+
+            let register = fetch(`https://secondhandbebin-stag.herokuapp.com/product/update1?id=${id}`, {
+              method: "PUT",
+              body: formData
+          })
   
             let result = await register;
             
