@@ -5,11 +5,11 @@ import { IoMdNotificationsOutline } from 'react-icons/io';
 import { AiOutlineUnorderedList } from 'react-icons/ai';
 import { BiUser,BiSearch } from 'react-icons/bi';
 import {useSelector,useDispatch} from 'react-redux'
-import axios from "axios";
-import allActions from "../../actions";
 import { useNavigate } from 'react-router-dom';
 
-const NavbarUserFull = () => {
+const NavbarUserFull = (props) => {
+  const {cari} = props;
+
     const navigate = useNavigate();
     let [noti, setNoti] = useState(false);
     let [login, setLogin] = useState(true);
@@ -52,15 +52,16 @@ const NavbarUserFull = () => {
     }
   
     const search = async () => {
-      axios.get('https://secondhandbebin-stag.herokuapp.com/product/findByNameLike2/?',{ params: { name: nama } })
-      .then((response) =>{
-          const data = response;
-          console.log(data.data);
-          dispatch(allActions.produk.searchData(data.data));
-      })
-      .catch((err) =>{
-          console.log(err);
-      })
+      cari(nama);
+      // axios.get('https://secondhandbebin-stag.herokuapp.com/product/findByNameLike2/?',{ params: { name: nama } })
+      // .then((response) =>{
+      //     const data = response;
+      //     console.log(data.data);
+      //     dispatch(allActions.produk.searchData(data.data));
+      // })
+      // .catch((err) =>{
+      //     console.log(err);
+      // })
     }
   
     return (
@@ -69,7 +70,7 @@ const NavbarUserFull = () => {
           <div className="container">
             <div className="d-flex">
               <span className="navbar-brand mb-0 h1 order-2">
-                <Link to="/seller/daftar-jual" className="text-decoration-none text-dark">
+                <Link to="/" className="text-decoration-none text-dark">
                   Navbar
                 </Link>
               </span>
