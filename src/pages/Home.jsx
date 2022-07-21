@@ -1,12 +1,18 @@
 import React from "react";
-import NavbarFull from "../components/Navbar/NavbarFull";
+import NavbarFull from '../components/Navbar/NavbarFull';
+import Jual from "../components/Landingpage/Jual";
+import Category from "../components/Landingpage/Category"
+import Carouselhome from "../components/Carousel/Carouselhome"
+import { useMediaQuery } from "react-responsive";
 
 export default function Home() {
   return (
     <>
-      <NavbarFull />
+    <NavbarFull/>
       <div>
-        <h1>Landing Page</h1>
+        <Carouselhome/>
+        <Category/>
+        <Jual/>
       </div>
     </>
   );
