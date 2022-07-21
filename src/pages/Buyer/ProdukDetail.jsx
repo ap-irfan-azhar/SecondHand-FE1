@@ -5,19 +5,65 @@ import CarouselItem from '../../components/Carousel/CarouselItem';
 import CardName from '../../components/Card/CardName';
 import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import Alert from 'react-bootstrap/Alert';
 
 const ProdukDetail = () => {
 
     const { id } = useParams();
+    const navigate = useNavigate();
 
     const [show, setShow] = useState(false);
     const [produk, getProduk] = useState({});
+    const [hargaTawar, setHargaTawar] = useState(0);
+    const [showNavbar, setShowNavbar] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+    // const config = {     
+    //     headers: { 'content-type': 'multipart/form-data' }
+    // }
+
+    const tawar = async () =>{
+
+        let date = new Date().toISOString();
+        date = date.replace('T', " ");
+        date = date.replace('Z', " ");
+
+        let data = {
+            "productId": produk.id,
+            "buyersId": 1,
+            "sellersId": produk.sellerId,
+            "buyersPrice": hargaTawar,
+            "statusOffers": true
+        }
+
+        console.log(data);
+
+        try {
+            let register = await axios.post(
+              'https://secondhandbebin-stag.herokuapp.com/offer/tawar', 
+              data
+            );
+  
+            let result = await register;
+
+            console.log(result.data);
+
+            setShowNavbar(true);
+            setShow(false);
+            
+  
+        }catch (error) {
+            if (error.response) {
+                console.log(error.response.data);
+            }
+        }
+    }
+
     const getsProduk = async () =>{
-        axios.get('https://secondhand-binar.herokuapp.com/product/' + id)
+        axios.get('https://secondhandbebin-stag.herokuapp.com/product/' + id)
         .then((response) =>{
             const data = response;
             getProduk(data.data);
@@ -25,23 +71,31 @@ const ProdukDetail = () => {
         .catch((err) =>{
             console.log(err);
         })
+
     }
 
     useEffect(() => {
         getsProduk();
         console.log('halo')
-    },[produk]);
+    },[]);
 
   return (
     <>
     <div className="mb-5">
         <NavbarFull/>
+
+        
         <div className="container">
+            <div>
+                <Alert variant="success" show={showNavbar} onClose={() => setShowNavbar(false)} dismissible>
+                Harga tawarmu berhasil dikirim ke penjual
+                </Alert>
+            </div>
             <div className="row">
                 <div className="col-12 col-md-10 mx-auto">
                     <div className="row">
                         <div className="col-12 col-sm-8 mb-3">
-                            <CarouselItem/>
+                            <CarouselItem data={produk.photoUrl}/>
 
                             <div className="card mt-4 round">
                                 <div className="card-body">
@@ -110,14 +164,14 @@ const ProdukDetail = () => {
                 </div>
 
                 <form>
-                    <div class="my-3">
-                        <label for="exampleInputEmail1" class="form-label">Harga Tawar</label>
-                        <input type="email" class="form-control round" placeholder="Rp 0,00" />
+                    <div className="my-3">
+                        <label for="exampleInputEmail1" className="form-label">Harga Tawar</label>
+                        <input type="text" value={hargaTawar} onChange={(e) => setHargaTawar(e.target.value)}  className="form-control round" placeholder="Rp 0,00" />
                     </div>
                 </form>
 
                 <div className="d-flex mt-3">
-                    <button type="button" className="btn btn-primary w-100 round">
+                    <button type="button" onClick={tawar} className="btn btn-primary w-100 round">
                         <span className="px-5">Kirim</span>
                     </button>
                 </div>

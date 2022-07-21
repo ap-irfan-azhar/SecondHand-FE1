@@ -25,7 +25,7 @@ const DaftarJual = () => {
         getsProduk();
         
        
-    },[produk]);
+    },[]);
 
   return (
     <div className="mb-5">
@@ -104,7 +104,7 @@ const DaftarJual = () => {
                             <div className="card card-child card-sm-child m-1 justify-content-center">
                                 <div className="text-center">
                                     <AiOutlinePlus/><br />
-                                    <Link to={`/seller/produk/info-produk`}>
+                                    <Link to={`/seller/produk/add`}>
                                     Tambah Produk
                                     </Link>
                                 </div>

@@ -6,9 +6,11 @@ import { AiOutlineUnorderedList } from 'react-icons/ai';
 import { BiUser,BiSearch } from 'react-icons/bi';
 import {useSelector,useDispatch} from 'react-redux'
 import axios from "axios";
-import allActions from "../../actions"
+import allActions from "../../actions";
+import { useNavigate } from 'react-router-dom';
 
 const NavbarUserFull = () => {
+    const navigate = useNavigate();
     let [noti, setNoti] = useState(false);
     let [login, setLogin] = useState(true);
     let [nama, setNama] = useState('');
@@ -42,6 +44,11 @@ const NavbarUserFull = () => {
       }else{
         setNoti(false);
       }
+    }
+
+    const logout = () => {
+      localStorage.clear();
+      navigate('/login');
     }
   
     const search = async () => {
@@ -105,7 +112,7 @@ const NavbarUserFull = () => {
                   </div>
                 </li>
                 <li className="nav-item">
-                  <div className="nav-link" href="#"><BiUser size={20}/></div>
+                  <div className="nav-link" href="#" onClick={logout}><BiUser size={20}/></div>
                 </li>
               </ul>
               )

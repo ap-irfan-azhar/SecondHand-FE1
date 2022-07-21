@@ -6,36 +6,26 @@ import CarouselItem from '../../components/Carousel/CarouselItem';
 import CardName from '../../components/Card/CardName';
 import { Link } from 'react-router-dom';
 
-const HalamanProduk = () => {
-
-    const { id } = useParams();
-    const [produk, getProduk] = useState({});
-
-    const getsProduk = async () =>{
-        axios.get('https://secondhandbebin-stag.herokuapp.com/product/' + id)
-        .then((response) =>{
-            const data = response;
-            getProduk(data.data);
-        })
-        .catch((err) =>{
-            console.log(err);
-        })
-    }
+const PreviewProduk = () => {
+    const [produk, setProduk] = useState({});
 
     useEffect(() => {
-        getsProduk();
-        console.log('halo')
+        const items = JSON.parse(localStorage.getItem('produk'));
+        if (items) {
+            setProduk(items);
+        }
+        console.log(items)
     },[]);
 
   return (
-    <div className="mb-5">
+     <div className="mb-5">
         <NavbarFull/>
         <div className="container">
             <div className="row">
                 <div className="col-12 col-md-10 mx-auto">
                     <div className="row">
                         <div className="col-12 col-sm-8 mb-3">
-                            <CarouselItem data={produk.photoUrl}/>
+                            <CarouselItem/>
 
                             <div className="card mt-4 round">
                                 <div className="card-body">
@@ -53,8 +43,8 @@ const HalamanProduk = () => {
                                     <p className="card-text">Rp {produk.price}</p>
 
                                     <div className="d-grid gap-2">
-                                        <button className="btn btn-primary round" type="button">Terbitakan</button>
-                                        <Link to={`/seller/produk/edit/${produk.id}`} className="btn btn-outline-primary round" type="button">Edit</Link>
+                                        
+                                        <Link to={`/seller/produk/add`} className="btn btn-outline-primary round" type="button">Kembali</Link>
                                     </div>
                                 </div>
                             </div>
@@ -74,4 +64,4 @@ const HalamanProduk = () => {
   )
 }
 
-export default HalamanProduk
+export default PreviewProduk
