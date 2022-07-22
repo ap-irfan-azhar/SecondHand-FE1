@@ -34,7 +34,17 @@ const InfoPenawar = () => {
     }
 
     const konfirmasi = async () => {
-        
+        let date = new Date().toISOString();
+        date = date.replace('T', " ");
+        date = date.replace('Z', " ");
+
+        // let data = {
+        //     "productId": produk.id,
+        //     "buyersId": 1,
+        //     "sellersId": produk.sellerId,
+        //     "buyersPrice": hargaTawar,
+        //     "statusOffers": true
+        // }
     }
 
     useEffect(() => {
