@@ -70,7 +70,8 @@ export default function NavbarFull(props) {
   }
 
   const getTawar = async () =>{
-    axios.get('https://secondhandbebin-stag.herokuapp.com/offer/list')
+    const id_seller = localStorage.getItem('id_admin');
+    axios.get(`https://secondhandbebin-stag.herokuapp.com/offer/list/seller/${id_seller}`)
     .then((response) =>{
         const data = response;
         setTawar(data.data);
@@ -155,17 +156,16 @@ export default function NavbarFull(props) {
             return (
               <div key={key} className="container border-bottom d-flex">
                 <div className="col-md-2">
-                  <img src="https://via.placeholder.com/150" className="img-fluid rounded" alt="..."/>
+                  <img src={e.products.photoUrl} className="img-fluid rounded" alt="..."/>
                 </div>
                 <div className="col-md-10 ps-4">
 
                   <div className="card-body p-0">
                     <p className="text-muted fs-6 mb-0" style={{fontSize:10}}>
                       <small>Penawaran produk</small>
-                      <small className="float-end">20 Apr, 14:04</small>
                     </p>
-                    <p className="card-text mb-0">Jam Tangan Casio</p>
-                    <p className="card-text mb-0">Rp 250.000</p>
+                    <p className="card-text mb-0">{e.products.name}</p>
+                    <p className="card-text mb-0">{e.products.price}</p>
                     <p className="card-text mb-3">Ditawar Rp.{e.buyersPrice}</p>
                   </div>
 

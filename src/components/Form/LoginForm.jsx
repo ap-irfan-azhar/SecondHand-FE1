@@ -5,6 +5,7 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 // import { login } from "../../actions/auth";
 
@@ -43,37 +44,42 @@ const Login = (props) => {
     setPassword(password);
   };
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     
+  // try {
+     
+  //     let register = fetch(`https://secondhandbebin-stag.herokuapp.com/api/user/login?username_or_email=${email}&password=${password}`, {
+  //       method: "POST",
+  //       mode: 'cors', 
+  //       headers: {
+  //         'Content-Type': 'application/json'
+  //       },
+  //     });
 
-    //form.current.validateAll();
+  //     let result = await register;
+  //     console.log(result);
 
-    // if (checkBtn.current.context._errors.length === 0) {
-    //   //Task 5. Memantik action login, untuk melakukan proses autentikasi, lalu kita cari action login()
-    //   dispatch(login(email, password))
-    //     .then(() => {
-    //       //Proses 6. Jika berhasil akan masuk ke halaman /profile
-    //       props.history.push("/buyer");
-    //       window.location.reload();
-    //     })
-    //     //Proses 7. Jika gagal dia return false
-    //     .catch(() => {
-    //       setLoading(false);
-    //     });
-    // } else {
-    //   setLoading(false);
-    // }
+  //     if(result){
+  //       navigate('/login');
+  //     }
 
+  // }catch (error) {
+  //     if (error.response) {
+  //         console.log(error.response.data);
+  //     }
+  // }
     
 
     if(email === 'user'){
       localStorage.setItem('role','user');
+      localStorage.setItem('id_user',1);
       console.log("user");
-      navigate('/produk');
+      navigate('/');
       <Navigate to="/produk" />;
     }else{
       localStorage.setItem('role','admin');
+      localStorage.setItem('id_admin',1);
       console.log("admin");
       navigate('/seller/daftar-jual');
       <Navigate to="/seller/daftar-jual" />;

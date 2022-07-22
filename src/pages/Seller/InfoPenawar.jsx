@@ -5,12 +5,14 @@ import { FaWhatsapp } from 'react-icons/fa';
 import CardName from '../../components/Card/CardName';
 import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
+import { useParams } from 'react-router';
 
 const InfoPenawar = () => {
 
     const [penawaran, setPenawaran] = useState([]);
 
     const [show, setShow] = useState(false);
+    const [terjual, setTerjual] = useState(false);
     const [show2, setShow2] = useState(false);
 
   const handleClose1 = () => setShow(false);
@@ -20,7 +22,7 @@ const InfoPenawar = () => {
   const handleShow2 = () => setShow2(true);
 
     const getsPenawaran = async () =>{
-        axios.get('https://secondhandbebin-stag.herokuapp.com/offer/list')
+        axios.get(`https://secondhandbebin-stag.herokuapp.com/offer/list`)
         .then((response) =>{
             const data = response;
             setPenawaran(data.data);
@@ -29,6 +31,10 @@ const InfoPenawar = () => {
             console.log(err);
         })
 
+    }
+
+    const konfirmasi = async () => {
+        
     }
 
     useEffect(() => {
@@ -63,16 +69,16 @@ const InfoPenawar = () => {
                                         <small>Penawaran produk</small>
                                         <small className="float-end">20 Apr, 14:04</small>
                                         </p>
-                                        <p className="card-text mb-0">Jam Tangan Casio</p>
-                                        <p className="card-text mb-0">Rp 250.000</p>
-                                        <p className="card-text mb-5">Ditawar Rp 200.000</p>
+                                        <p className="card-text mb-0">{e.products.name}</p>
+                                        <p className="card-text mb-0">{e.products.price}</p>
+                                        <p className="card-text mb-5">Ditawar Rp {e.buyersPrice}</p>
                                     </div>   
                                 </div>
 
                                 <div className="position-absolute bottom-0 w-100 mb-2">
                                     <div className="float-none float-sm-end d-flex">
-                                        <button onClick={handleShow2} type="button" className="btn btn-sm btn-outline-primary me-2 px-4 flex-grow-1 round">Tolak</button>
-                                        <button onClick={handleShow1} type="button" className="btn btn-sm btn-primary flex-grow-1 px-4 round">Terima</button>
+                                        <button onClick={handleShow1} type="button" className="btn btn-sm btn-outline-primary me-2 px-4 flex-grow-1 round">Tolak</button>
+                                        <button onClick={handleShow2} type="button" className="btn btn-sm btn-primary flex-grow-1 px-4 round">Terima</button>
                                     </div>
                                 </div>
                             </div>
@@ -158,7 +164,7 @@ const InfoPenawar = () => {
                 <p className="fw-bold">Perbarui status penjualan produkmu</p>
                 
                 <div className="form-check">
-                    <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked/>
+                    <input className="form-check-input" onChange={()=>setTerjual(true)} type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked/>
                     <label className="form-check-label" for="exampleRadios1">
                         Berhasil terjual
                     </label>
@@ -166,7 +172,7 @@ const InfoPenawar = () => {
                 <p className="text-muted ms-4">Kamu telah sepakat menjual produk ini kepada pembeli</p>
                 
                 <div className="form-check">
-                    <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2"/>
+                    <input className="form-check-input" onChange={()=>setTerjual(false)} type="radio" name="exampleRadios" id="exampleRadios2" value="option2"/>
                     <label className="form-check-label" for="exampleRadios2">
                         Batalkan transaksi
                     </label>

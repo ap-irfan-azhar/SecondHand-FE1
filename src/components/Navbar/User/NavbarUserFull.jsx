@@ -1,4 +1,4 @@
-import React,{ useState } from "react";
+import React,{ useEffect,useState } from "react";
 import { Link } from "react-router-dom";
 import styled from 'styled-components';
 import { IoMdNotificationsOutline } from 'react-icons/io';
@@ -6,6 +6,7 @@ import { AiOutlineUnorderedList } from 'react-icons/ai';
 import { BiUser,BiSearch } from 'react-icons/bi';
 import {useSelector,useDispatch} from 'react-redux'
 import { useNavigate } from 'react-router-dom';
+import axios from "axios";
 
 const NavbarUserFull = (props) => {
   const {cari} = props;
@@ -14,6 +15,7 @@ const NavbarUserFull = (props) => {
     let [noti, setNoti] = useState(false);
     let [login, setLogin] = useState(true);
     let [nama, setNama] = useState('');
+    let [tawar, setTawar] = useState([]);
   
     const dispatch = useDispatch()
   
@@ -63,6 +65,24 @@ const NavbarUserFull = (props) => {
       //     console.log(err);
       // })
     }
+
+    const getTawar = async () =>{
+      const id_buyer = localStorage.getItem('id_user');
+      axios.get(`https://secondhandbebin-stag.herokuapp.com/offer/list/buyer/${id_buyer}`)
+      .then((response) =>{
+          const data = response;
+          setTawar(data.data);
+      })
+      .catch((err) =>{
+          console.log(err);
+      })
+    }
+
+    useEffect(() => {
+      getTawar();
+      
+     
+    },[]);
   
     return (
       <>
@@ -99,21 +119,23 @@ const NavbarUserFull = (props) => {
   
               {login ? (
                 <ul className="navbar-nav ms-auto mb-2 mb-lg-0 d-flex flex-row">
-                <li className="nav-item">
+                {/* <li className="nav-item">
                   <div className="nav-link">
                     <Link to="/seller/penawaran" className="text-decoration-none text-dark">
                         <AiOutlineUnorderedList size={20}/>
                     </Link>
                     
                   </div>
-                </li>
+                </li> */}
                 <li className="nav-item">
                   <div className="nav-link" href="#" onClick={display}>
                     <IoMdNotificationsOutline size={20}/>
                   </div>
                 </li>
                 <li className="nav-item">
-                  <div className="nav-link" href="#" onClick={logout}><BiUser size={20}/></div>
+                  <div className="nav-link" href="#">
+                    <BiUser  onClick={logout} size={20}/>
+                    </div>
                 </li>
               </ul>
               )
@@ -125,25 +147,32 @@ const NavbarUserFull = (props) => {
   
         <div className={`card float-end shadow-sm position-absolute round ${noti ? 'd-block' : 'd-none'} `} id="notifikasi" style={{width: `420px`, right:`5rem`, zIndex:3}}>
           <div className="card-body">
-            <div className="container border-bottom d-flex">
-              <div className="col-md-2">
-                <img src="https://via.placeholder.com/150" className="img-fluid rounded" alt="..."/>
-              </div>
-              <div className="col-md-10 ps-4">
-  
-                <div className="card-body p-0">
-                  <p className="text-muted fs-6 mb-0" style={{fontSize:10}}>
-                    <small>Penawaran produk</small>
-                    <small className="float-end">20 Apr, 14:04</small>
-                  </p>
-                  <p className="card-text mb-0">Jam Tangan Casio</p>
-                  <p className="card-text mb-0">Rp 250.000</p>
-                  <p className="card-text mb-3">Ditawar Rp 200.000</p>
+
+
+            { tawar.map((e,key)=>{ 
+            return (
+              <div key={key} className="container border-bottom d-flex">
+                <div className="col-md-2">
+                  <img src={e.products.photoUrl} className="img-fluid rounded" alt="..."/>
                 </div>
-  
+                <div className="col-md-10 ps-4">
+
+                  <div className="card-body p-0">
+                    <p className="text-muted fs-6 mb-0" style={{fontSize:10}}>
+                      <small>Penawaran produk</small>
+                    </p>
+                    <p className="card-text mb-0">{e.products.name}</p>
+                    <p className="card-text mb-0">{e.products.price}</p>
+                    <p className="card-text mb-3">Ditawar Rp.{e.buyersPrice}</p>
+                  </div>
+
+                </div>
+                
               </div>
-              
-            </div>
+            )
+          })
+        }
+
   
             <div className="text-center mb-1 mt-3" >
               <Link to="/seller/notifikasi">

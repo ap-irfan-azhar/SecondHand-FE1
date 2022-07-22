@@ -43,7 +43,7 @@ const ProdukDetail = () => {
 
         try {
             let register = await axios.post(
-              'https://secondhandbebin-stag.herokuapp.com/offer/tawar', 
+              'https://secondhandbebin-stag.herokuapp.com/offer/tawar1', 
               data
             );
   

@@ -1,6 +1,5 @@
 import React, { useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
@@ -8,9 +7,12 @@ import { isEmail } from "validator";
 import {Link} from  'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Alert from 'react-bootstrap/Alert';
 
 // proses 7 menuju ke folder actions/auth.js
 import { register } from "../../actions/auth";
+
+
 
 const required = (value) => {
   if (!value) {
@@ -61,6 +63,7 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [successful, setSuccessful] = useState(false);
+  const [showNavbar, setShowNavbar] = useState(false);
 
   const { message } = useSelector((state) => state.message);
   const dispatch = useDispatch();
@@ -100,29 +103,24 @@ const Register = () => {
       //#Proses 6 if successful then return true dan apabila gagal maka akan catch false
     }
 
-    const formData = new FormData();
-
-    formData.append('username', username);
-    formData.append('email', email);
-    formData.append('password', password);
-
-    const config = {     
-      headers: { 'content-type': 'multipart/form-data' }
+    const formData = {
+        'username' : username,
+        'email' : email,
+        'password' : password
     }
 
     try {
         let register = await axios.post(
           'https://secondhandbebin-stag.herokuapp.com/api/user/register', 
           formData,
-          config
         );
 
         let result = await register;
-        
+        console.log(result);
+
         if(result){
-          
+          navigate('/login');
         }
-        navigate('/login');
 
     }catch (error) {
         if (error.response) {
@@ -133,78 +131,83 @@ const Register = () => {
   };
 
   return (
-    <Form
-      onSubmit={handleRegister}
-      ref={form}
-      className="bg-white d-flex flex-column justify-content-center w-100 p-5"
-    >
-      <h3 className="mb-3 fw-bold">Registrasi</h3>
-      {!successful && (
-        <div>
-          <div className="form-group mb-3">
-            <label htmlFor="username">Username</label>
-            <Input
-              type="text"
-              className="form-control"
-              name="username"
-              placeholder="Nama Lengkap"
-              value={username}
-              onChange={onChangeUsername}
-              validations={[required, vusername]}
-            />
-          </div>
+    <>
+      <Alert variant="success" show={showNavbar} onClose={() => setShowNavbar(false)} dismissible>
+          Error
+      </Alert>
+      <Form
+        onSubmit={handleRegister}
+        ref={form}
+        className="bg-white d-flex flex-column justify-content-center w-100 p-5"
+      >
+        <h3 className="mb-3 fw-bold">Registrasi</h3>
+        {!successful && (
+          <div>
+            <div className="form-group mb-3">
+              <label htmlFor="username">Username</label>
+              <Input
+                type="text"
+                className="form-control"
+                name="username"
+                placeholder="Nama Lengkap"
+                value={username}
+                onChange={onChangeUsername}
+                validations={[required, vusername]}
+              />
+            </div>
 
-          <div className="form-group mb-3">
-            <label htmlFor="email">Email</label>
-            <Input
-              type="text"
-              className="form-control"
-              name="email"
-              placeholder="Contoh: johndee@gmail.com"
-              value={email}
-              onChange={onChangeEmail}
-              validations={[required, validEmail]}
-            />
-          </div>
+            <div className="form-group mb-3">
+              <label htmlFor="email">Email</label>
+              <Input
+                type="text"
+                className="form-control"
+                name="email"
+                placeholder="Contoh: johndee@gmail.com"
+                value={email}
+                onChange={onChangeEmail}
+                validations={[required, validEmail]}
+              />
+            </div>
 
-          <div className="form-group mb-3">
-            <label htmlFor="password">Password</label>
-            <Input
-              type="password"
-              className="form-control"
-              name="password"
-              placeholder="Masukkan Password"
-              value={password}
-              onChange={onChangePassword}
-              validations={[required, vpassword]}
-            />
+            <div className="form-group mb-3">
+              <label htmlFor="password">Password</label>
+              <Input
+                type="password"
+                className="form-control"
+                name="password"
+                placeholder="Masukkan Password"
+                value={password}
+                onChange={onChangePassword}
+                validations={[required, vpassword]}
+              />
+            </div>
+            {/* Task 2, button Sign up */}
+            <div className="form-group mb-3 w-fluid">
+              <button className="btn btn-primary btn-block">Sign Up</button>
+            </div>
           </div>
-          {/* Task 2, button Sign up */}
-          <div className="form-group mb-3 w-fluid">
-            <button className="btn btn-primary btn-block">Sign Up</button>
+        )}
+        {/* Proses 10. if variable message true then mengeluarkan output message */}
+        {message && (
+          <div className="form-group">
+            <div
+              className={
+                successful ? "alert alert-success" : "alert alert-danger"
+              }
+              role="alert"
+            >
+              {message}
+            </div>
           </div>
-        </div>
-      )}
-      {/* Proses 10. if variable message true then mengeluarkan output message */}
-      {message && (
-        <div className="form-group">
-          <div
-            className={
-              successful ? "alert alert-success" : "alert alert-danger"
-            }
-            role="alert"
-          >
-            {message}
+        )}
+        <CheckButton style={{ display: "none" }} ref={checkBtn} />
+        <div className="mt-3">
+            <h6>
+              Sudah punya akun? <Link to="/login" className="text-decoration-none"> di sini</Link>
+            </h6>
           </div>
-        </div>
-      )}
-      <CheckButton style={{ display: "none" }} ref={checkBtn} />
-      <div className="mt-3">
-          <h6>
-            Sudah punya akun? <Link to="/login" className="text-decoration-none"> di sini</Link>
-          </h6>
-        </div>
-    </Form>
+      </Form>
+    </>
   );
 };
 

@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 library.add(faMagnifyingGlass)
 const Category = () => {
@@ -61,7 +62,10 @@ const Category = () => {
                                 <div class="card p-3 w-100">
                                     <img src={e.photoUrl} class="card-img w-fluid" alt="..."/>
                                     <div class="card-body">
-                                        <h1 class="card-title">{e.name}</h1>
+                                        <Link to={`/produk/detail/${e.id}`}>
+                                            <h1 class="card-title">{e.name}</h1>
+                                            
+                                        </Link>
                                         <p class="card-jenis">{e.status}</p>
                                         <h6 class="card-price">{e.price}</h6>
                                     </div>
