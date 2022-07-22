@@ -10,7 +10,7 @@ import { useParams } from 'react-router';
 const InfoPenawar = () => {
 
     const [penawaran, setPenawaran] = useState([]);
-
+    const [idoffer, setIdOffer] = useState(0);
     const [show, setShow] = useState(false);
     const [terjual, setTerjual] = useState(false);
     const [show2, setShow2] = useState(false);
@@ -18,8 +18,14 @@ const InfoPenawar = () => {
   const handleClose1 = () => setShow(false);
   const handleShow1 = () => setShow(true);
 
-  const handleClose2 = () => setShow2(false);
-  const handleShow2 = () => setShow2(true);
+    const handleClose2 = () => {
+        setShow2(false);   
+    };
+
+  const handleShow2 = (id) => {
+    setShow2(true);
+    setIdOffer(id);
+};
 
     const getsPenawaran = async () =>{
         axios.get(`https://secondhandbebin-stag.herokuapp.com/offer/list`)
@@ -34,17 +40,50 @@ const InfoPenawar = () => {
     }
 
     const konfirmasi = async () => {
-        let date = new Date().toISOString();
-        date = date.replace('T', " ");
-        date = date.replace('Z', " ");
+        console.log(terjual)
+        if(terjual){
 
-        // let data = {
-        //     "productId": produk.id,
-        //     "buyersId": 1,
-        //     "sellersId": produk.sellerId,
-        //     "buyersPrice": hargaTawar,
-        //     "statusOffers": true
-        // }
+            try {
+            const tawars = axios.get(`https://secondhandbebin-stag.herokuapp.com/offer/tawar/${idoffer}`);
+            let dataTawar = await tawars;
+            console.log(dataTawar);
+            }catch (error) {
+                if (error.response) {
+                    console.log(error.response.data);
+                }
+            }
+            
+    
+            let date = new Date().toISOString();
+            date = date.replace('T', " ");
+            date = date.replace('Z', " ");
+
+            // let data = {
+            //     "offersId": idoffer,
+            //     "productId": dataTawar.productId,
+            //     "buyersId": dataTawar.buyersId,
+            //     "sellersId": dataTawar.sellerId,
+            //     "price": dataTawar.buyersPrice,
+            //     "dateSold" : date
+            // }
+
+            // try {
+            //     let register = await axios.post(
+            //       'https://secondhandbebin-stag.herokuapp.com/transaction-history/save', 
+            //       data,
+            //     );
+        
+            //     let result = await register;
+            //     console.log(result);
+        
+            // }catch (error) {
+            //     if (error.response) {
+            //         console.log(error.response.data);
+            //     }
+            // }
+        }
+
+
     }
 
     useEffect(() => {
@@ -88,7 +127,7 @@ const InfoPenawar = () => {
                                 <div className="position-absolute bottom-0 w-100 mb-2">
                                     <div className="float-none float-sm-end d-flex">
                                         <button onClick={handleShow1} type="button" className="btn btn-sm btn-outline-primary me-2 px-4 flex-grow-1 round">Tolak</button>
-                                        <button onClick={handleShow2} type="button" className="btn btn-sm btn-primary flex-grow-1 px-4 round">Terima</button>
+                                        <button onClick={() => {handleShow2(e.offersId);console.log(e)}} type="button" className="btn btn-sm btn-primary flex-grow-1 px-4 round">Terima</button>
                                     </div>
                                 </div>
                             </div>
@@ -174,7 +213,7 @@ const InfoPenawar = () => {
                 <p className="fw-bold">Perbarui status penjualan produkmu</p>
                 
                 <div className="form-check">
-                    <input className="form-check-input" onChange={()=>setTerjual(true)} type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked/>
+                    <input className="form-check-input" onClick={()=>{setTerjual(true); console.log(terjual)}} type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked/>
                     <label className="form-check-label" for="exampleRadios1">
                         Berhasil terjual
                     </label>
@@ -182,7 +221,7 @@ const InfoPenawar = () => {
                 <p className="text-muted ms-4">Kamu telah sepakat menjual produk ini kepada pembeli</p>
                 
                 <div className="form-check">
-                    <input className="form-check-input" onChange={()=>setTerjual(false)} type="radio" name="exampleRadios" id="exampleRadios2" value="option2"/>
+                    <input className="form-check-input" onClick={()=>{setTerjual(false); console.log(terjual)}} type="radio" name="exampleRadios" id="exampleRadios2" value="option2"/>
                     <label className="form-check-label" for="exampleRadios2">
                         Batalkan transaksi
                     </label>
@@ -190,7 +229,7 @@ const InfoPenawar = () => {
                 <p className="text-muted ms-4">Kamu membatalkan transaksi produk ini dengan pembeli</p>
 
                 <div className="d-flex mt-3">
-                    <button type="button" className="btn btn-primary w-100 round">
+                    <button type="button" onClick={konfirmasi} className="btn btn-primary w-100 round">
                         Kirim
                     </button>
                 </div>

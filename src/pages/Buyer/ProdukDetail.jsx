@@ -7,6 +7,7 @@ import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Alert from 'react-bootstrap/Alert';
+import NavbarUserFull from '../../components/Navbar/User/NavbarUserFull';
 
 const ProdukDetail = () => {
 
@@ -17,6 +18,7 @@ const ProdukDetail = () => {
     const [produk, getProduk] = useState({});
     const [hargaTawar, setHargaTawar] = useState(0);
     const [showNavbar, setShowNavbar] = useState(false);
+    const [openTawar, setOpenTawar] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -74,6 +76,17 @@ const ProdukDetail = () => {
 
     }
 
+    const checkTawar = async () => {
+        axios.get('https://secondhandbebin-stag.herokuapp.com/product/' + id)
+        .then((response) =>{
+            const data = response;
+            getProduk(data.data);
+        })
+        .catch((err) =>{
+            console.log(err);
+        })
+    }
+
     useEffect(() => {
         getsProduk();
         console.log('halo')
@@ -82,7 +95,7 @@ const ProdukDetail = () => {
   return (
     <>
     <div className="mb-5">
-        <NavbarFull/>
+        <NavbarUserFull/>
 
         
         <div className="container">
@@ -153,10 +166,10 @@ const ProdukDetail = () => {
                         </div>
 
                         <div className="flex-grow-1 ms-3">
-                            <h6 className="card-title mb-0">Jam tangan</h6>
+                            <h6 className="card-title mb-0">{produk.name}</h6>
                             <p className="card-text">
                                 <small>
-                                Rp 250.000
+                                Rp {produk.price}
                                 </small>
                             </p>
                         </div>

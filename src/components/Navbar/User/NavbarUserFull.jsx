@@ -68,10 +68,11 @@ const NavbarUserFull = (props) => {
 
     const getTawar = async () =>{
       const id_buyer = localStorage.getItem('id_user');
-      axios.get(`https://secondhandbebin-stag.herokuapp.com/offer/list/buyer/${id_buyer}`)
+      axios.get(`https://secondhandbebin-stag.herokuapp.com/offer/list/buyer/${id_buyer}?id=${id_buyer}`)
       .then((response) =>{
           const data = response;
           setTawar(data.data);
+          console.log(data.data)
       })
       .catch((err) =>{
           console.log(err);
