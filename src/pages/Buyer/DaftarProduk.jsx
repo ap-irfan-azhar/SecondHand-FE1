@@ -8,10 +8,13 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import {useSelector} from 'react-redux'
 import allActions from '../../actions';
+import NavbarUserFull from '../../components/Navbar/User/NavbarUserFull';
 
 const DaftarProduk = () => {
 
     const [produk, getProduk] = useState([]);
+
+    
 
     const dataProdukGlobal = useSelector(state => state.produk);
 
@@ -26,20 +29,33 @@ const DaftarProduk = () => {
         })
     }
 
+    const searchProduk = async (cari) =>{
+        console.log(cari);
+        if(cari === 'null' || cari === ''){
+            getsProduk();
+        }else{
+
+            axios.get('https://secondhandbebin-stag.herokuapp.com/product/findByNameLike2/?',{ params: { name: cari } })
+            .then((response) =>{
+                const data = response;
+                console.log(data.data);
+                getProduk(data.data);
+            })
+            .catch((err) =>{
+                console.log(err);
+            })
+        }
+    }
+
     useEffect(() => {
         getsProduk();
         
-        console.log(produk);
-
-        if(dataProdukGlobal.data != null){
-            getProduk(dataProdukGlobal.data);
-        }
     },[dataProdukGlobal]);
 
 
   return (
     <div className="mb-5">
-        <NavbarFull/>
+        <NavbarUserFull cari={searchProduk}/>
         <div className="container">
             <div className="row">
                 <div className="col-12 col-md-10 mx-auto position-relative">
@@ -140,9 +156,6 @@ const DaftarProduk = () => {
                                 
                             }) }
                         
-
-                            
-
                         </div>
                     </div>
                 </div>

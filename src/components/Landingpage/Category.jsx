@@ -1,19 +1,41 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import Carouselhome from '../Carousel/Carouselhome';
 import Categories from './Categories'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 library.add(faMagnifyingGlass)
 const Category = () => {
+
     const [data,setData]=useState(Categories);
+    const [produk, getProduk] = useState([]);
+
+    const getsProduk = async () =>{
+        axios.get('https://secondhandbebin-stag.herokuapp.com/product/')
+        .then((response) =>{
+            const data = response;
+            getProduk(data.data);
+        })
+        .catch((err) =>{
+            console.log(err);
+        })
+    }
+
     const filterResult=(catItem)=>{
         const result=Categories.filter((curData)=>{
             return curData.category===catItem;
         });
         setData(result);
     }
+
+    useEffect(() => {
+        getsProduk();
+        
+    },[]);
+
   return (
     <>
     <div className="container-fluid mx-2">
@@ -33,17 +55,19 @@ const Category = () => {
                     </div>
                     <div className="card-menu col-lg-12"  >
                         <div className="row">
-                            {data.map((values)=>{
-                                const {id,title,price,jenis,image}=values;
+                            {produk.map((e,values)=>{
                                 return(
                                     <>
-                                    <div className="col-lg-2 mb-3 mt-3 .ml-4" key={id} >
+                                    <div className="col-lg-2 mb-3 mt-3 .ml-4" key={values} >
                                 <div class="card p-3 w-100">
-                                    <img src={image} class="card-img w-fluid" alt="..."/>
+                                    <img src={e.photoUrl} class="card-img w-fluid" alt="..."/>
                                     <div class="card-body">
-                                        <h1 class="card-title">{title}</h1>
-                                        <p class="card-jenis">{jenis}</p>
-                                        <h6 class="card-price">{price}</h6>
+                                        <Link to={`/produk/detail/${e.id}`}>
+                                            <h1 class="card-title">{e.name}</h1>
+                                            
+                                        </Link>
+                                        <p class="card-jenis">{e.status}</p>
+                                        <h6 class="card-price">{e.price}</h6>
                                     </div>
                                 </div>
                             </div>

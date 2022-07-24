@@ -1,19 +1,29 @@
-import React,{ useState } from "react";
+import React,{ useEffect,useState } from "react";
 import { Link } from "react-router-dom";
 import styled from 'styled-components';
 import { IoMdNotificationsOutline } from 'react-icons/io';
 import { AiOutlineUnorderedList } from 'react-icons/ai';
 import { BiUser,BiSearch } from 'react-icons/bi';
 import {useSelector,useDispatch} from 'react-redux'
-import axios from "axios";
-import allActions from "../../actions";
 import { useNavigate } from 'react-router-dom';
+import axios from "axios";
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 
-const NavbarUserFull = () => {
+const NavbarUserFull = (props) => {
+  const {cari} = props;
+
     const navigate = useNavigate();
     let [noti, setNoti] = useState(false);
     let [login, setLogin] = useState(true);
     let [nama, setNama] = useState('');
+    let [tawar, setTawar] = useState([]);
+
+    const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   
     const dispatch = useDispatch()
   
@@ -52,16 +62,36 @@ const NavbarUserFull = () => {
     }
   
     const search = async () => {
-      axios.get('https://secondhandbebin-stag.herokuapp.com/product/findByNameLike2/?',{ params: { name: nama } })
+      cari(nama);
+      // axios.get('https://secondhandbebin-stag.herokuapp.com/product/findByNameLike2/?',{ params: { name: nama } })
+      // .then((response) =>{
+      //     const data = response;
+      //     console.log(data.data);
+      //     dispatch(allActions.produk.searchData(data.data));
+      // })
+      // .catch((err) =>{
+      //     console.log(err);
+      // })
+    }
+
+    const getTawar = async () =>{
+      const id_buyer = localStorage.getItem('id_user');
+      axios.get(`https://secondhandbebin-stag.herokuapp.com/offer/list/buyer/${id_buyer}?id=${id_buyer}`)
       .then((response) =>{
           const data = response;
-          console.log(data.data);
-          dispatch(allActions.produk.searchData(data.data));
+          setTawar(data.data);
+          console.log(data.data)
       })
       .catch((err) =>{
           console.log(err);
       })
     }
+
+    useEffect(() => {
+      getTawar();
+      
+     
+    },[]);
   
     return (
       <>
@@ -69,7 +99,7 @@ const NavbarUserFull = () => {
           <div className="container">
             <div className="d-flex">
               <span className="navbar-brand mb-0 h1 order-2">
-                <Link to="/seller/daftar-jual" className="text-decoration-none text-dark">
+                <Link to="/" className="text-decoration-none text-dark">
                   Navbar
                 </Link>
               </span>
@@ -98,21 +128,23 @@ const NavbarUserFull = () => {
   
               {login ? (
                 <ul className="navbar-nav ms-auto mb-2 mb-lg-0 d-flex flex-row">
-                <li className="nav-item">
+                {/* <li className="nav-item">
                   <div className="nav-link">
                     <Link to="/seller/penawaran" className="text-decoration-none text-dark">
                         <AiOutlineUnorderedList size={20}/>
                     </Link>
                     
                   </div>
-                </li>
+                </li> */}
                 <li className="nav-item">
                   <div className="nav-link" href="#" onClick={display}>
                     <IoMdNotificationsOutline size={20}/>
                   </div>
                 </li>
                 <li className="nav-item">
-                  <div className="nav-link" href="#" onClick={logout}><BiUser size={20}/></div>
+                  <div className="nav-link" href="#">
+                    <BiUser onClick={handleShow} size={20}/>
+                    </div>
                 </li>
               </ul>
               )
@@ -124,25 +156,32 @@ const NavbarUserFull = () => {
   
         <div className={`card float-end shadow-sm position-absolute round ${noti ? 'd-block' : 'd-none'} `} id="notifikasi" style={{width: `420px`, right:`5rem`, zIndex:3}}>
           <div className="card-body">
-            <div className="container border-bottom d-flex">
-              <div className="col-md-2">
-                <img src="https://via.placeholder.com/150" className="img-fluid rounded" alt="..."/>
-              </div>
-              <div className="col-md-10 ps-4">
-  
-                <div className="card-body p-0">
-                  <p className="text-muted fs-6 mb-0" style={{fontSize:10}}>
-                    <small>Penawaran produk</small>
-                    <small className="float-end">20 Apr, 14:04</small>
-                  </p>
-                  <p className="card-text mb-0">Jam Tangan Casio</p>
-                  <p className="card-text mb-0">Rp 250.000</p>
-                  <p className="card-text mb-3">Ditawar Rp 200.000</p>
+
+
+            { tawar.map((e,key)=>{ 
+            return (
+              <div key={key} className="container border-bottom d-flex">
+                <div className="col-md-2">
+                  <img src={e.products.photoUrl} className="img-fluid rounded" alt="..."/>
                 </div>
-  
+                <div className="col-md-10 ps-4">
+
+                  <div className="card-body p-0">
+                    <p className="text-muted fs-6 mb-0" style={{fontSize:10}}>
+                      <small>Penawaran produk</small>
+                    </p>
+                    <p className="card-text mb-0">{e.products.name}</p>
+                    <p className="card-text mb-0">{e.products.price}</p>
+                    <p className="card-text mb-3">Ditawar Rp.{e.buyersPrice}</p>
+                  </div>
+
+                </div>
+                
               </div>
-              
-            </div>
+            )
+          })
+        }
+
   
             <div className="text-center mb-1 mt-3" >
               <Link to="/seller/notifikasi">
@@ -174,11 +213,21 @@ const NavbarUserFull = () => {
         </div>
   
   
-        {/* <Link to="/login">
-          <button className="btn btn-primary" type="submit">
-            Button
-          </button>
-        </Link> */}
+        <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>User</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Link to="/profile">
+            <Button variant="secondary" className="mx-2">
+              Profile
+            </Button>
+          </Link>
+          <Button variant="danger" onClick={logout}>
+            Logout
+          </Button>
+        </Modal.Body>
+      </Modal>
       </>
     );
 }

@@ -1,4 +1,4 @@
-import React,{ useState } from "react";
+import React,{ useEffect,useState } from "react";
 import { Link } from "react-router-dom";
 import styled from 'styled-components';
 import { IoMdNotificationsOutline } from 'react-icons/io';
@@ -8,14 +8,24 @@ import {useSelector,useDispatch} from 'react-redux'
 import axios from "axios";
 import allActions from "../../actions"
 import { useNavigate } from 'react-router-dom';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 
 
-export default function NavbarFull() {
+export default function NavbarFull(props) {
+  const {cari} = props;
 
   const navigate = useNavigate();
   let [noti, setNoti] = useState(false);
   let [login, setLogin] = useState(true);
   let [nama, setNama] = useState('');
+  let [tawar, setTawar] = useState([]);
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
 
   const dispatch = useDispatch()
 
@@ -54,16 +64,36 @@ export default function NavbarFull() {
   }
 
   const search = async () => {
-    axios.get('https://secondhandbebin-stag.herokuapp.com/product/findByNameLike2/?',{ params: { name: nama } })
+    cari(nama);
+    // axios.get('https://secondhandbebin-stag.herokuapp.com/product/findByNameLike2/?',{ params: { name: nama } })
+    // .then((response) =>{
+    //     const data = response;
+    //     console.log(data.data);
+    //     dispatch(allActions.produk.searchData(data.data));
+    // })
+    // .catch((err) =>{
+    //     console.log(err);
+    // })
+  }
+
+  const getTawar = async () =>{
+    const id_seller = localStorage.getItem('id_admin');
+    axios.get(`https://secondhandbebin-stag.herokuapp.com/offer/list/seller/${id_seller}`)
     .then((response) =>{
         const data = response;
-        console.log(data.data);
-        dispatch(allActions.produk.searchData(data.data));
+        setTawar(data.data);
     })
     .catch((err) =>{
         console.log(err);
     })
   }
+
+  useEffect(() => {
+    getTawar();
+    
+   
+  },[]);
+
 
   return (
     <>
@@ -114,7 +144,7 @@ export default function NavbarFull() {
                 </div>
               </li>
               <li className="nav-item">
-                <div className="nav-link list" onClick={logout}>
+                <div className="nav-link list" onClick={handleShow}>
                   <BiUser size={20}/>
                 </div>
               </li>
@@ -128,25 +158,30 @@ export default function NavbarFull() {
 
       <div className={`card float-end shadow-sm position-absolute round ${noti ? 'd-block' : 'd-none'} `} id="notifikasi" style={{width: `420px`, right:`5rem`, zIndex:3}}>
         <div className="card-body">
-          <div className="container border-bottom d-flex">
-            <div className="col-md-2">
-              <img src="https://via.placeholder.com/150" className="img-fluid rounded" alt="..."/>
-            </div>
-            <div className="col-md-10 ps-4">
+          
+        { tawar.map((e,key)=>{ 
+            return (
+              <div key={key} className="container border-bottom d-flex">
+                <div className="col-md-2">
+                  <img src={e.products.photoUrl} className="img-fluid rounded" alt="..."/>
+                </div>
+                <div className="col-md-10 ps-4">
 
-              <div className="card-body p-0">
-                <p className="text-muted fs-6 mb-0" style={{fontSize:10}}>
-                  <small>Penawaran produk</small>
-                  <small className="float-end">20 Apr, 14:04</small>
-                </p>
-                <p className="card-text mb-0">Jam Tangan Casio</p>
-                <p className="card-text mb-0">Rp 250.000</p>
-                <p className="card-text mb-3">Ditawar Rp 200.000</p>
+                  <div className="card-body p-0">
+                    <p className="text-muted fs-6 mb-0" style={{fontSize:10}}>
+                      <small>Penawaran produk</small>
+                    </p>
+                    <p className="card-text mb-0">{e.products.name}</p>
+                    <p className="card-text mb-0">{e.products.price}</p>
+                    <p className="card-text mb-3">Ditawar Rp.{e.buyersPrice}</p>
+                  </div>
+
+                </div>
+                
               </div>
-
-            </div>
-            
-          </div>
+            )
+          })
+        }
 
           <div className="text-center mb-1 mt-3" >
             <Link to="/seller/notifikasi">
@@ -178,11 +213,21 @@ export default function NavbarFull() {
       </div>
 
 
-      {/* <Link to="/login">
-        <button className="btn btn-primary" type="submit">
-          Button
-        </button>
-      </Link> */}
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>User</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Link to="/profile">
+            <Button variant="secondary" className="mx-2">
+              Profile
+            </Button>
+          </Link>
+          <Button variant="danger" onClick={logout}>
+            Logout
+          </Button>
+        </Modal.Body>
+      </Modal>
     </>
   );
 }

@@ -4,11 +4,12 @@ import Jual from "../components/Landingpage/Jual";
 import Category from "../components/Landingpage/Category"
 import Carouselhome from "../components/Carousel/Carouselhome"
 import { useMediaQuery } from "react-responsive";
+import NavbarUserFull from "../components/Navbar/User/NavbarUserFull";
 
 export default function Home() {
   return (
     <>
-    <NavbarFull/>
+    <NavbarUserFull/>
       <div>
         <Carouselhome/>
         <Category/>

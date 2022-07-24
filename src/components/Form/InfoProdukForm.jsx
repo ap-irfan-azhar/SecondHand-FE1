@@ -40,10 +40,11 @@ export default function InfoProdukForm() {
           }
         }
 
-        
-      
-
         console.log(formData);
+        
+        const formProps = Object.fromEntries(formData);
+        console.log(formProps);
+
 
       try {
           let register = fetch('https://secondhandbebin-stag.herokuapp.com/product/register', {
