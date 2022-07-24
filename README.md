@@ -10,5 +10,5 @@ https://second-hands-binar.herokuapp.com/
 
 ## Daftar Akun
 
-email = test
-password = 12345678
+- email = test
+- password = 12345678
