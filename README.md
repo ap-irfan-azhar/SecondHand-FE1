@@ -4,11 +4,11 @@
 - Abilio krismanuel
 - Faisal karim
 
-##URL Hosting
+## URL Hosting
 
 https://second-hands-binar.herokuapp.com/
 
-##Daftar Akun
+## Daftar Akun
 
 email = test
 password = 12345678
