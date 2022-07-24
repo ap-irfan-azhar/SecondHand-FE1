@@ -1,5 +1,5 @@
 # Projek akhir FE
 
-Feri alfajri
-Abilio krismanuel
-Faisal karim
+- Feri alfajri
+- Abilio krismanuel
+- Faisal karim
