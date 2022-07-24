@@ -26,6 +26,7 @@ const Login = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [role, setRole] = useState("");
 
   const navigate = useNavigate();
 
@@ -44,46 +45,64 @@ const Login = (props) => {
     setPassword(password);
   };
 
+  const parseJwt = (token) => {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    return JSON.parse(jsonPayload) ;
+};
+
   const handleLogin = async (e) => {
     e.preventDefault();
     
-  // try {
-     
-  //     let register = fetch(`https://secondhandbebin-stag.herokuapp.com/api/user/login?username_or_email=${email}&password=${password}`, {
-  //       method: "POST",
-  //       mode: 'cors', 
-  //       headers: {
-  //         'Content-Type': 'application/json'
-  //       },
-  //     });
+    try {
+      
+        // let register = fetch(`https://secondhandbebin-stag.herokuapp.com/api/user/login?username_or_email=${email}&password=${password}`, {
+        //   method: "GET",
+        //   mode: 'cors', 
+        //   headers: {
+        //     'Content-Type': 'application/json'
+        //   },
+        // });
 
-  //     let result = await register;
-  //     console.log(result);
+        let register = axios.get(`https://secondhandbebin-stag.herokuapp.com/api/user/login?username_or_email=${email}&password=${password}`, {
+          method: "GET",
+          headers: {
+            'Content-Type': 'application/json'
+          },
+        });
 
-  //     if(result){
-  //       navigate('/login');
-  //     }
+        let result = await register;
+        let id_user = parseJwt(result.data.access_token);
+        console.log(id_user.sub);
+        console.log(role);
 
-  // }catch (error) {
-  //     if (error.response) {
-  //         console.log(error.response.data);
-  //     }
-  // }
+
+        if(role === 'user'){
+          localStorage.setItem('role','user');
+          localStorage.setItem('id_user',id_user.sub);
+          console.log("user");
+          navigate('/');
+         
+        }else{
+          localStorage.setItem('role','admin');
+          localStorage.setItem('id_admin',id_user.sub);
+          console.log("admin");
+          navigate('/seller/daftar-jual');
+
+        }
+
+    }catch (error) {
+        if (error.response) {
+            console.log(error.response.data);
+        }
+    }
     
 
-    if(email === 'user'){
-      localStorage.setItem('role','user');
-      localStorage.setItem('id_user',1);
-      console.log("user");
-      navigate('/');
-      <Navigate to="/produk" />;
-    }else{
-      localStorage.setItem('role','admin');
-      localStorage.setItem('id_admin',1);
-      console.log("admin");
-      navigate('/seller/daftar-jual');
-      <Navigate to="/seller/daftar-jual" />;
-    }
+    
   };
 
   if (isLoggedIn) {
@@ -123,6 +142,22 @@ const Login = (props) => {
             onChange={onChangePassword}
             validations={[required]}
           />
+        </div>
+
+        <div className="mb-4">
+          <label htmlFor="">Role</label>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" onClick={() => setRole('user')}/>
+            <label class="form-check-label" for="flexRadioDefault1">
+              Buyer
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" onClick={() => setRole('admin')} />
+            <label class="form-check-label" for="flexRadioDefault2">
+              Seller
+            </label>
+          </div>
         </div>
 
         <button className="btn btn-primary btn-block mb-3" onClick={handleLogin} disabled={loading}>

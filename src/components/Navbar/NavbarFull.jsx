@@ -8,6 +8,8 @@ import {useSelector,useDispatch} from 'react-redux'
 import axios from "axios";
 import allActions from "../../actions"
 import { useNavigate } from 'react-router-dom';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 
 
 export default function NavbarFull(props) {
@@ -18,6 +20,11 @@ export default function NavbarFull(props) {
   let [login, setLogin] = useState(true);
   let [nama, setNama] = useState('');
   let [tawar, setTawar] = useState([]);
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
 
   const dispatch = useDispatch()
@@ -137,7 +144,7 @@ export default function NavbarFull(props) {
                 </div>
               </li>
               <li className="nav-item">
-                <div className="nav-link list" onClick={logout}>
+                <div className="nav-link list" onClick={handleShow}>
                   <BiUser size={20}/>
                 </div>
               </li>
@@ -206,11 +213,21 @@ export default function NavbarFull(props) {
       </div>
 
 
-      {/* <Link to="/login">
-        <button className="btn btn-primary" type="submit">
-          Button
-        </button>
-      </Link> */}
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>User</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Link to="/profile">
+            <Button variant="secondary" className="mx-2">
+              Profile
+            </Button>
+          </Link>
+          <Button variant="danger" onClick={logout}>
+            Logout
+          </Button>
+        </Modal.Body>
+      </Modal>
     </>
   );
 }

@@ -7,6 +7,8 @@ import { BiUser,BiSearch } from 'react-icons/bi';
 import {useSelector,useDispatch} from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 
 const NavbarUserFull = (props) => {
   const {cari} = props;
@@ -16,6 +18,12 @@ const NavbarUserFull = (props) => {
     let [login, setLogin] = useState(true);
     let [nama, setNama] = useState('');
     let [tawar, setTawar] = useState([]);
+
+    const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   
     const dispatch = useDispatch()
   
@@ -135,7 +143,7 @@ const NavbarUserFull = (props) => {
                 </li>
                 <li className="nav-item">
                   <div className="nav-link" href="#">
-                    <BiUser  onClick={logout} size={20}/>
+                    <BiUser onClick={handleShow} size={20}/>
                     </div>
                 </li>
               </ul>
@@ -205,11 +213,21 @@ const NavbarUserFull = (props) => {
         </div>
   
   
-        {/* <Link to="/login">
-          <button className="btn btn-primary" type="submit">
-            Button
-          </button>
-        </Link> */}
+        <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>User</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Link to="/profile">
+            <Button variant="secondary" className="mx-2">
+              Profile
+            </Button>
+          </Link>
+          <Button variant="danger" onClick={logout}>
+            Logout
+          </Button>
+        </Modal.Body>
+      </Modal>
       </>
     );
 }
